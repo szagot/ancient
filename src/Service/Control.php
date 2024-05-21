@@ -14,6 +14,8 @@ class Control
         // Teste
         $db = new Database();
 
+        // TODO: fazer GET, PUT, POST, DELETE para gamers e personagens
+
 //        $person = new Person('123', 'Abraão');
 //        $person->addQuestion(new PersonQuestion('123', 'Ele fez alguma viagem longa?'));
 //        $person->addQuestion(new PersonQuestion('124', 'Foi um patriarca?'));
