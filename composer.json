@@ -1,0 +1,10 @@
+{
+    "autoload": {
+        "psr-4": {
+            "Ancient\\": "src/"
+        }
+    },
+    "require": {
+        "szagot/config": "^1.0"
+    }
+}
