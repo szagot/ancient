@@ -15,11 +15,16 @@ class People
         switch ($uri->getMethod()) {
             case 'GET':
                 if (empty($id)) {
-                    // GET
+                    // GET All
                     die(json_encode($db->getPeople()));
                 }
 
-                // GET id
+                // GET /{id}/questions
+                if($uri->detalhe == 'questions'){
+                    die(json_encode($db->getPersonQuestions($id)));
+                }
+
+                // GET {id}
                 die(json_encode($db->getPerson($id)));
 
             case 'POST':

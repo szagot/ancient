@@ -125,6 +125,25 @@ class Database
         return null;
     }
 
+    public function getPersonQuestions(string $id): array
+    {
+        if (empty($this->questions)) {
+            return [];
+        }
+
+        $questions = [];
+        /** @var Question $question */
+        foreach ($this->questions as $question) {
+            foreach ($question->people as $person) {
+                if ($person->id == $id) {
+                    $questions[] = $question;
+                }
+            }
+        }
+
+        return $questions;
+    }
+
     public function addPerson(Person $person): void
     {
         if ($this->getPerson($person->id) || $this->getPersonByName($person->name)) {
