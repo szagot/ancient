@@ -2,16 +2,15 @@
 
 namespace Ancient\Config;
 
-use Ancient\Models\Gamer;
 use Ancient\Models\Person;
-use Ancient\Models\PersonQuestion;
+use Ancient\Models\Question;
 
 class Database
 {
-    const FILE_PEOPLES = DATABASE . 'peoples.json';
-    const FILE_GAMERS = DATABASE . 'gamers.json';
+    const FILE_PEOPLES   = DATABASE . 'peoples.json';
+    const FILE_QUESTIONS = DATABASE . 'questions.json';
 
-    private array $gamers;
+    private array $questions;
     private array $people;
 
     public function __construct()
@@ -21,96 +20,77 @@ class Database
 
     /**
      * Atualiza as propriedades internas com os valores dos arquivos
+     *
      * @return void
      */
     public function refresh(): void
     {
-        $this->gamers = [];
         $this->people = [];
+        $this->questions = [];
         if (file_exists(self::FILE_PEOPLES)) {
             $people = @json_decode(file_get_contents(self::FILE_PEOPLES));
             foreach ($people as $person) {
-                $people = new Person($person->id, $person->name);
-                if (!empty($person->questions)) {
-                    foreach ($person->questions as $question) {
-                        $people->addQuestion(new PersonQuestion($question->id, $question->question));
-                    }
-                }
-                $this->people[] = $people;
+                $this->people[] = new Person($person->id, $person->name);
             }
         }
 
-        if (file_exists(self::FILE_GAMERS)) {
-            $gamers = @json_decode(file_get_contents(self::FILE_GAMERS));
-            foreach ($gamers as $gamer) {
-                $this->gamers[] = new Gamer($gamer->id, $gamer->name);
+        if (file_exists(self::FILE_QUESTIONS)) {
+            $questions = @json_decode(file_get_contents(self::FILE_QUESTIONS));
+            foreach ($questions as $question) {
+                $personQuestion = new Question($question->id, $question->question);
+                /** @var Person $person */
+                foreach ($question->persons as $person) {
+                    $personQuestion->addPerson(new Person($person->id, $person->name));
+                }
+
+                $this->questions[] = $personQuestion;
             }
         }
     }
 
     /**
      * Salva nos arquivos as propriedades internas
+     *
      * @return void
      */
     public function persist(): void
     {
-        file_put_contents(self::FILE_GAMERS, json_encode($this->gamers));
         file_put_contents(self::FILE_PEOPLES, json_encode($this->people));
+        file_put_contents(self::FILE_QUESTIONS, json_encode($this->questions));
     }
 
-    public function getGamer(string $id): ?Gamer
+    /**
+     * Pega o último registro de um dos dados
+     *
+     * @param array $array
+     *
+     * @return Person|Question|null
+     */
+    private function getLast(array $array = []): Person|Question|null
     {
-        if (empty($this->gamers)) {
+        if (empty($array)) {
             return null;
         }
 
-        /** @var Gamer $gamer */
-        foreach ($this->gamers as $gamer) {
-            if ($gamer->id == $id) {
-                return $gamer;
+        $max = 0;
+        $return = null;
+        foreach ($array as $find) {
+            if ($find->id > $max) {
+                $return = $find;
             }
         }
 
-        return null;
+        return $return;
     }
 
-    public function addGamer(Gamer $gamer): void
+    public function getPeople(): array
     {
-        if ($this->getGamer($gamer->id)) {
-            return;
-        }
-
-        $this->gamers[] = $gamer;
+        return $this->people;
     }
 
-    public function removeGamer(string $id): void
+    public function getLastPerson(): ?Person
     {
-        if (empty($this->gamers)) {
-            return;
-        }
-
-        /** @var Gamer $gamer */
-        foreach ($this->gamers as $index => $gamer) {
-            if ($gamer->id == $id) {
-                unset($this->gamers[$index]);
-                $this->gamers = array_values($this->gamers);
-                return;
-            }
-        }
-    }
-
-    public function updateGamer(Gamer $newGamer): void
-    {
-        if (empty($this->gamers)) {
-            return;
-        }
-
-        foreach ($this->gamers as $index => $gamer) {
-            if ($gamer->id == $newGamer->id) {
-                $this->gamers[$index] = $newGamer;
-                return;
-            }
-        }
+        return $this->getLast($this->getPeople());
     }
 
     public function getPerson(string $id): ?Person
@@ -144,11 +124,23 @@ class Database
             return;
         }
 
-        /** @var Gamer $gamer */
+        /** @var Person $person */
         foreach ($this->people as $index => $person) {
             if ($person->id == $id) {
                 unset($this->people[$index]);
                 $this->people = array_values($this->people);
+
+                /** @var Question $question Remove as pessoas das questões também */
+                foreach ($this->questions as $iQ => $question) {
+                    /** @var Person $person */
+                    foreach ($question->persons as $iP => $personQuestion) {
+                        if ($personQuestion->id == $person->id) {
+                            unset($this->questions[$iQ]->persons[$iP]);
+                            $this->questions = array_values($this->questions);
+                            break;
+                        }
+                    }
+                }
                 return null;
             }
         }
@@ -163,6 +155,82 @@ class Database
         foreach ($this->people as $index => $person) {
             if ($person->id == $newPerson->id) {
                 $this->people[$index] = $newPerson;
+
+                /** @var Question $question Atualiza as pessoas das questões também */
+                foreach ($this->questions as $iQ => $question) {
+                    /** @var Person $personQuestion */
+                    foreach ($question->persons as $iP => $personQuestion) {
+                        if ($personQuestion->id == $newPerson->id) {
+                            $this->questions[$iQ]->persons[$iP] = $newPerson;
+                            break;
+                        }
+                    }
+                }
+                return;
+            }
+        }
+    }
+
+    public function getQuestions(): array
+    {
+        return $this->questions;
+    }
+
+    public function getLastQuestion(): ?Question
+    {
+        return $this->getLast($this->getQuestions());
+    }
+
+    public function getQuestion(string $id): ?Question
+    {
+        if (empty($this->questions)) {
+            return null;
+        }
+
+        /** @var Question $question */
+        foreach ($this->questions as $question) {
+            if ($question->id == $id) {
+                return $question;
+            }
+        }
+
+        return null;
+    }
+
+    public function addQuestion(Question $question): void
+    {
+        if ($this->getQuestion($question->id)) {
+            return;
+        }
+
+        $this->questions[] = $question;
+    }
+
+    public function removeQuestion(string $id)
+    {
+        if (empty($this->questions)) {
+            return;
+        }
+
+        /** @var Question $question */
+        foreach ($this->questions as $index => $question) {
+            if ($question->id == $id) {
+                unset($this->questions[$index]);
+                $this->questions = array_values($this->people);
+                return null;
+            }
+        }
+    }
+
+    public function updateQuestion(Question $newQuestion): void
+    {
+        if (empty($this->questions)) {
+            return;
+        }
+
+        foreach ($this->questions as $index => $question) {
+            if ($question->id == $newQuestion->id) {
+                $this->questions[$index] = $newQuestion;
                 return;
             }
         }

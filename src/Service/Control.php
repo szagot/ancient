@@ -4,25 +4,25 @@ namespace Ancient\Service;
 
 use Ancient\Config\Database;
 use Ancient\Models\Person;
-use Ancient\Models\PersonQuestion;
+use Ancient\Models\Question;
+use JetBrains\PhpStorm\NoReturn;
 use Sz\Config\Uri;
 
 class Control
 {
-    static public function run(Uri $uri)
+    static public function run(Uri $uri): void
     {
-        // Teste
         $db = new Database();
 
-        // TODO: fazer GET, PUT, POST, DELETE para gamers e personagens
+        switch (strtolower($uri->pagina)) {
+            case 'questions':
+                Questions::run($uri, $db);
+                break;
+            case 'people':
+                People::run($uri, $db);
+                break;
+        }
 
-//        $person = new Person('123', 'Abraão');
-//        $person->addQuestion(new PersonQuestion('123', 'Ele fez alguma viagem longa?'));
-//        $person->addQuestion(new PersonQuestion('124', 'Foi um patriarca?'));
-//
-//        $db->addPerson($person);
-//        $db->persist();
-
-        echo json_encode($db->getPerson('123')?->getQuestion('124') ?? []);
+        die(json_encode([]));
     }
 }
