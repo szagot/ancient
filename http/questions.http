@@ -1,0 +1,4 @@
+GET http://localhost:8888/questions
+
+###
+GET http://localhost:8888/questions/1

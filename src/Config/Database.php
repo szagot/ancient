@@ -85,7 +85,7 @@ class Database
 
     public function getPeople(): array
     {
-        return $this->people;
+        return $this->people ?? [];
     }
 
     public function getLastPerson(): ?Person
@@ -173,7 +173,7 @@ class Database
 
     public function getQuestions(): array
     {
-        return $this->questions;
+        return $this->questions ?? [];
     }
 
     public function getLastQuestion(): ?Question
