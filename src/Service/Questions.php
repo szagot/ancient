@@ -27,6 +27,7 @@ class Questions
 
             case 'DELETE':
                 if (empty($id)) {
+                    http_response_code(400);
                     die(json_encode(['msg' => 'Informe o ID para deleção']));
                 }
                 break;
@@ -34,6 +35,7 @@ class Questions
             case 'PUT':
             case 'PATCH':
                 if (empty($id)) {
+                    http_response_code(400);
                     die(json_encode(['msg' => 'Informe o ID para atualização']));
                 }
                 break;

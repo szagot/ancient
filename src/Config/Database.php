@@ -99,7 +99,7 @@ class Database
             return null;
         }
 
-        /** @var Person $gamer */
+        /** @var Person $person */
         foreach ($this->people as $person) {
             if ($person->id == $id) {
                 return $person;
@@ -109,9 +109,25 @@ class Database
         return null;
     }
 
+    public function getPersonByName(string $name): ?Person
+    {
+        if (empty($this->people)) {
+            return null;
+        }
+
+        /** @var Person $person */
+        foreach ($this->people as $person) {
+            if ($person->name == $name) {
+                return $person;
+            }
+        }
+
+        return null;
+    }
+
     public function addPerson(Person $person): void
     {
-        if ($this->getPerson($person->id)) {
+        if ($this->getPerson($person->id) || $this->getPersonByName($person->name)) {
             return;
         }
 

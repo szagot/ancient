@@ -2,3 +2,11 @@ GET http://localhost:8888/people
 
 ###
 GET http://localhost:8888/people/1
+
+###
+POST http://localhost:8888/people
+Content-Type: application/json
+
+{
+  "name": "Adão"
+}
