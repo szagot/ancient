@@ -53,6 +53,18 @@ class People
                     http_response_code(400);
                     die(json_encode(['msg' => 'Informe o ID para atualização']));
                 }
+
+                $name = $uri->getParam('name');
+                if (empty($name)) {
+                    http_response_code(400);
+                    die(json_encode(['msg' => 'Informe o nome do personagem']));
+                }
+                
+                $person = $db->getPerson($id);
+                $person->name = $name;
+                $db->updatePerson($person);
+                $db->persist();
+                http_response_code(204);
                 break;
         }
     }
