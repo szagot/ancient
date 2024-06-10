@@ -2,3 +2,14 @@ GET http://localhost:8888/questions
 
 ###
 GET http://localhost:8888/questions/1
+
+###
+POST http://localhost:8888/questions
+Content-Type: application/json
+
+{
+  "question": "É homem?"
+}
+
+###
+DELETE http://localhost:8888/questions/3

@@ -232,7 +232,7 @@ class Database
         foreach ($this->questions as $index => $question) {
             if ($question->id == $id) {
                 unset($this->questions[$index]);
-                $this->questions = array_values($this->people);
+                $this->questions = array_values($this->questions);
                 return null;
             }
         }

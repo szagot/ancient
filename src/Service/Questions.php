@@ -3,6 +3,7 @@
 namespace Ancient\Service;
 
 use Ancient\Config\Database;
+use Ancient\Models\Question;
 use Sz\Config\Uri;
 
 class Questions
@@ -20,9 +21,19 @@ class Questions
 
                 // GET id
                 die(json_encode($db->getQuestion($id)));
-                break;
 
             case 'POST':
+                $question = $uri->getParam('question');
+                if (empty($question)) {
+                    http_response_code(400);
+                    die(json_encode(['msg' => 'Informe a pergunta']));
+                }
+
+                $lastQuestion = $db->getLastQuestion();
+                $id = 1 + ($lastQuestion?->id ?? 0);
+                $db->addQuestion(new Question($id, $question));
+                $db->persist();
+                http_response_code(201);
                 break;
 
             case 'DELETE':
@@ -30,6 +41,10 @@ class Questions
                     http_response_code(400);
                     die(json_encode(['msg' => 'Informe o ID para deleção']));
                 }
+
+                $db->removeQuestion($id);
+                $db->persist();
+                http_response_code(204);
                 break;
 
             case 'PUT':
