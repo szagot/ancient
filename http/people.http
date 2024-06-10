@@ -10,3 +10,7 @@ Content-Type: application/json
 {
   "name": "Adão"
 }
+
+###
+DELETE http://localhost:8888/people/4
+

@@ -21,7 +21,6 @@ class People
 
                 // GET id
                 die(json_encode($db->getPerson($id)));
-                break;
 
             case 'POST':
                 $name = $uri->getParam('name');
@@ -42,6 +41,10 @@ class People
                     http_response_code(400);
                     die(json_encode(['msg' => 'Informe o ID para deleção']));
                 }
+
+                $db->removePerson($id);
+                $db->persist();
+                http_response_code(204);
                 break;
 
             case 'PUT':
