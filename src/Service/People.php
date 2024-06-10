@@ -26,10 +26,16 @@ class People
                 break;
 
             case 'DELETE':
+                if (empty($id)) {
+                    die(json_encode(['msg' => 'Informe o ID para deleção']));
+                }
                 break;
 
             case 'PUT':
             case 'PATCH':
+                if (empty($id)) {
+                    die(json_encode(['msg' => 'Informe o ID para atualização']));
+                }
                 break;
         }
     }
