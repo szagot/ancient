@@ -19,5 +19,5 @@ PUT http://localhost:8888/people/1
 Content-Type: application/json
 
 {
-  "name": "Abrão"
+  "name": "Abraão"
 }

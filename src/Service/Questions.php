@@ -3,6 +3,7 @@
 namespace Ancient\Service;
 
 use Ancient\Config\Database;
+use Ancient\Models\Person;
 use Ancient\Models\Question;
 use Sz\Config\Uri;
 
@@ -53,6 +54,27 @@ class Questions
                     http_response_code(400);
                     die(json_encode(['msg' => 'Informe o ID para atualização']));
                 }
+
+                $questionTxt = $uri->getParam('question');
+                $people =  $uri->getParam('people');
+                if (empty($questionTxt) && empty($people)) {
+                    http_response_code(400);
+                    die(json_encode(['msg' => 'Informe a pergunta ou as pessoas relacionadas a essa pergunta']));
+                }
+
+                $question = $db->getQuestion($id);
+                if(!empty($questionTxt)) {
+                    $question->question = $questionTxt;
+                }
+                if(!empty($people)) {
+                    $question->people = [];
+                    foreach ($people as $personId) {
+                        $question->addPerson($db->getPerson($personId));
+                    }
+                }
+                $db->updateQuestion($question);
+                $db->persist();
+                http_response_code(204);
                 break;
         }
     }

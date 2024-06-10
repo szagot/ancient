@@ -39,7 +39,7 @@ class Database
             foreach ($questions as $question) {
                 $personQuestion = new Question($question->id, $question->question);
                 /** @var Person $person */
-                foreach ($question->persons as $person) {
+                foreach ($question->people as $person) {
                     $personQuestion->addPerson(new Person($person->id, $person->name));
                 }
 
@@ -149,9 +149,9 @@ class Database
                 /** @var Question $question Remove as pessoas das questões também */
                 foreach ($this->questions as $iQ => $question) {
                     /** @var Person $person */
-                    foreach ($question->persons as $iP => $personQuestion) {
+                    foreach ($question->people as $iP => $personQuestion) {
                         if ($personQuestion->id == $person->id) {
-                            unset($this->questions[$iQ]->persons[$iP]);
+                            unset($this->questions[$iQ]->people[$iP]);
                             $this->questions = array_values($this->questions);
                             break;
                         }
@@ -175,9 +175,9 @@ class Database
                 /** @var Question $question Atualiza as pessoas das questões também */
                 foreach ($this->questions as $iQ => $question) {
                     /** @var Person $personQuestion */
-                    foreach ($question->persons as $iP => $personQuestion) {
+                    foreach ($question->people as $iP => $personQuestion) {
                         if ($personQuestion->id == $newPerson->id) {
-                            $this->questions[$iQ]->persons[$iP] = $newPerson;
+                            $this->questions[$iQ]->people[$iP] = $newPerson;
                             break;
                         }
                     }

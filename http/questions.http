@@ -13,3 +13,15 @@ Content-Type: application/json
 
 ###
 DELETE http://localhost:8888/questions/3
+
+###
+PUT http://localhost:8888/questions/3
+Content-Type: application/json
+
+{
+  "question": "É homem?",
+  "people": [
+    1,
+    4
+  ]
+}
