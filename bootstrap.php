@@ -5,7 +5,7 @@ const ROOT = '/';
 
 require_once BASEDIR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
-$debug = true;
+$debug = false;
 
 // Configurações do servidor
 header('Content-type: application/json');
