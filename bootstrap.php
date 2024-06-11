@@ -2,7 +2,7 @@
 
 define('BASEDIR', __DIR__ . DIRECTORY_SEPARATOR);
 define('DATABASE', BASEDIR . DIRECTORY_SEPARATOR . 'db' . DIRECTORY_SEPARATOR);
-define('ROOT', '/ancient/backend/');
+define('ROOT', 'ancient/backend/');
 
 require_once BASEDIR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
