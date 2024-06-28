@@ -10,6 +10,11 @@ class Control
     static public function run(Uri $uri): void
     {
         self::cors();
+        if (!self::checkBasicAuth()) {
+            header('HTTP/1.1 401 Unauthorized');
+            header('WWW-Authenticate: Basic realm="Area Restrita"');
+            exit('Acesso não autorizado.');
+        }
         
         $db = new Database();
 
@@ -45,5 +50,24 @@ class Control
 
             exit(0);
         }
+    }
+
+    // Função para verificar as credenciais de autenticação básica
+    private static function checkBasicAuth(): bool
+    {
+        if (!isset($_SERVER['PHP_AUTH_USER']) || !isset($_SERVER['PHP_AUTH_PW'])) {
+            return false;
+        }
+
+        // Credenciais mockadas
+        $expectedUser = 'szagot';
+        $expectedPass = 'DSpider1981';
+
+        // Verifica se as credenciais correspondem
+        if ($_SERVER['PHP_AUTH_USER'] !== $expectedUser || $_SERVER['PHP_AUTH_PW'] !== $expectedPass) {
+            return false;
+        }
+
+        return true;
     }
 }
