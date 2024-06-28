@@ -60,8 +60,8 @@ class Control
         }
 
         // Credenciais mockadas
-        $expectedUser = 'szagot';
-        $expectedPass = 'DSpider1981';
+        $expectedUser = getenv('ANCIENT_USER');
+        $expectedPass = getenv('ANCIENT_PASS');
 
         // Verifica se as credenciais correspondem
         if ($_SERVER['PHP_AUTH_USER'] !== $expectedUser || $_SERVER['PHP_AUTH_PW'] !== $expectedPass) {
