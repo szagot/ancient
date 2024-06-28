@@ -59,7 +59,6 @@ class Control
             return false;
         }
 
-        // Credenciais mockadas
         $expectedUser = getenv('ANCIENT_USER');
         $expectedPass = getenv('ANCIENT_PASS');
 
