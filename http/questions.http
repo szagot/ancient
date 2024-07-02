@@ -1,32 +1,10 @@
 GET http://localhost:8888/questions
-Authorization: Basic c3phZ290OkRTcGlkZXIxOTgx
+Authorization: Basic {{auth}}
 
 ###
 GET http://localhost:8888/questions/1
-Authorization: Basic c3phZ290OkRTcGlkZXIxOTgx
+Authorization: Basic {{auth}}
 
 ###
-POST http://localhost:8888/questions
-Content-Type: application/json
-Authorization: Basic c3phZ290OkRTcGlkZXIxOTgx
-
-{
-  "question": "É homem?"
-}
-
-###
-DELETE http://localhost:8888/questions/3
-Authorization: Basic c3phZ290OkRTcGlkZXIxOTgx
-
-###
-PUT http://localhost:8888/questions/3
-Content-Type: application/json
-Authorization: Basic c3phZ290OkRTcGlkZXIxOTgx
-
-{
-  "question": "É homem?",
-  "people": [
-    1,
-    4
-  ]
-}
+GET http://localhost:8888/questions/1/characters
+Authorization: Basic {{auth}}

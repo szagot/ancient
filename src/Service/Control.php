@@ -16,14 +16,12 @@ class Control
             exit('Acesso não autorizado.');
         }
         
-        $db = new Database();
-
         switch (strtolower($uri->pagina)) {
             case 'questions':
-                Questions::run($uri, $db);
+                Questions::run($uri);
                 break;
-            case 'people':
-                People::run($uri, $db);
+            case 'characters':
+                Characters::run($uri);
                 break;
         }
 

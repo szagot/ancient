@@ -4,6 +4,8 @@ namespace Ancient\Models;
 
 class Gamer
 {
+    const TABLE = 'gamers';
+
     public int     $id;
     public ?string $name;
     public ?int    $points   = 0;

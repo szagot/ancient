@@ -1,0 +1,32 @@
+GET http://localhost:8888/characters
+Authorization: Basic {{auth}}
+
+###
+GET http://localhost:8888/characters/1
+Authorization: Basic {{auth}}
+
+###
+GET http://localhost:8888/characters/1/questions
+Authorization: Basic {{auth}}
+
+###
+POST http://localhost:8888/characters
+Content-Type: application/json
+Authorization: Basic {{auth}}
+
+{
+  "name": "Adão"
+}
+
+###
+DELETE http://localhost:8888/characters/4
+Authorization: Basic {{auth}}
+
+###
+PUT http://localhost:8888/characters/1
+Content-Type: application/json
+Authorization: Basic {{auth}}
+
+{
+  "name": "Abraão"
+}

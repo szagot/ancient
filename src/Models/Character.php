@@ -2,14 +2,24 @@
 
 namespace Ancient\Models;
 
+use Ancient\Control\Crud;
+use Sz\Conn\Query;
+
 class Character
 {
-    public int $id;
+    const TABLE = 'characters';
+
+    public int     $id;
     public ?string $name;
 
     public function getQuestions(): array
     {
-        // TODO
-        return [];
+        return Query::exec(
+            'SELECT q.* FROM questions q INNER JOIN character_question cq on q.id = cq.question_id WHERE cq.character_id = :id',
+            [
+                'id' => $this->id,
+            ],
+            Question::class
+        );
     }
 }

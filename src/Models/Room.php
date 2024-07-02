@@ -7,6 +7,8 @@ use Exception;
 
 class Room
 {
+    const TABLE = 'room';
+
     public string  $code;
     public ?int    $fase      = 0;
     public ?int    $secret_character_id;
