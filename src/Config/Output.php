@@ -19,7 +19,7 @@ class Output
         self::success(
             [
                 'status'  => $httpCode,
-                'message' => $message,
+                'msg' => $message,
             ],
             $httpCode
         );

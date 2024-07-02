@@ -5,12 +5,12 @@ namespace Ancient\Models;
 use Ancient\Control\Crud;
 use Sz\Conn\Query;
 
-class Character
-{
-    const TABLE = 'characters';
+    class Character
+    {
+        const TABLE = 'characters';
 
-    public int     $id;
-    public ?string $name;
+        public int     $id;
+        public ?string $name;
 
     public function getQuestions(): array
     {

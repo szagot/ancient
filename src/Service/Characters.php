@@ -7,6 +7,7 @@ use Ancient\Config\Output;
 use Ancient\Control\Crud;
 use Ancient\Models\Character;
 use Sz\Config\Uri;
+use Sz\Conn\Query;
 
 class Characters
 {
@@ -31,21 +32,27 @@ class Characters
 
                 // GET {id}
                 Output::success($character);
-                
+
                 break;
 
             case 'POST':
                 $name = $uri->getParam('name');
                 if (empty($name)) {
-                    http_response_code(400);
-                    die(json_encode(['msg' => 'Informe o nome do personagem']));
+                    Output::error('Informe o nome do personagem');
                 }
 
-//                $lastPerson = $db->getLastPerson();
-//                $id = 1 + ($lastPerson?->id ?? 0);
-//                $db->addPerson(new Character($id, $name));
-//                $db->persist();
-                http_response_code(201);
+                // Nome já cadastrado?
+                $character = Crud::search(Character::class, 'name', $name);
+                if (count($character) > 0) {
+                    Output::success($character[0]);
+                }
+
+                if (!$id = Crud::insert(Character::class, 'id', $uri->getParametros())) {
+                    Output::error('Não foi possível incluir agora.');
+                }
+
+                Output::success(['id' => $id], 201);
+
                 break;
 
             case 'DELETE':
