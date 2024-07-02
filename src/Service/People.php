@@ -3,7 +3,7 @@
 namespace Ancient\Service;
 
 use Ancient\Config\Database;
-use Ancient\Models\Person;
+use Ancient\Models\Character;
 use Sz\Config\Uri;
 
 class People
@@ -36,7 +36,7 @@ class People
 
                 $lastPerson = $db->getLastPerson();
                 $id = 1 + ($lastPerson?->id ?? 0);
-                $db->addPerson(new Person($id, $name));
+                $db->addPerson(new Character($id, $name));
                 $db->persist();
                 http_response_code(201);
                 break;

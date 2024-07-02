@@ -1,14 +1,14 @@
 GET http://localhost:8888/people
-Authorization: Basic c3phZ290OkRTcGlkZXIxOTgx
+Authorization: Basic YW5jaWVudDo0bkMxM250ITIwMjQ=
 
 ###
 GET http://localhost:8888/people/1
-Authorization: Basic c3phZ290OkRTcGlkZXIxOTgx
+Authorization: Basic YW5jaWVudDo0bkMxM250ITIwMjQ=
 
 ###
 POST http://localhost:8888/people
 Content-Type: application/json
-Authorization: Basic c3phZ290OkRTcGlkZXIxOTgx
+Authorization: Basic YW5jaWVudDo0bkMxM250ITIwMjQ=
 
 {
   "name": "Adão"
@@ -16,12 +16,12 @@ Authorization: Basic c3phZ290OkRTcGlkZXIxOTgx
 
 ###
 DELETE http://localhost:8888/people/4
-Authorization: Basic c3phZ290OkRTcGlkZXIxOTgx
+Authorization: Basic YW5jaWVudDo0bkMxM250ITIwMjQ=
 
 ###
 PUT http://localhost:8888/people/1
 Content-Type: application/json
-Authorization: Basic c3phZ290OkRTcGlkZXIxOTgx
+Authorization: Basic YW5jaWVudDo0bkMxM250ITIwMjQ=
 
 {
   "name": "Abraão"

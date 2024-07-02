@@ -3,7 +3,7 @@
 namespace Ancient\Service;
 
 use Ancient\Config\Database;
-use Ancient\Models\Person;
+use Ancient\Models\Character;
 use Ancient\Models\Question;
 use Sz\Config\Uri;
 

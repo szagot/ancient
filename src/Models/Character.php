@@ -2,12 +2,12 @@
 
 namespace Ancient\Models;
 
-class Question
+class Character
 {
     public int $id;
-    public ?string $question;
+    public ?string $name;
 
-    public function getCharacters(): array
+    public function getQuestions(): array
     {
         // TODO
         return [];

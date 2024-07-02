@@ -1,7 +1,8 @@
 <?php
 
+use Sz\Conn\Query;
+
 define('BASEDIR', __DIR__ . DIRECTORY_SEPARATOR);
-define('DATABASE', BASEDIR . DIRECTORY_SEPARATOR . 'db' . DIRECTORY_SEPARATOR);
 define('ROOT', 'ancient/backend/');
 
 require_once BASEDIR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
@@ -16,6 +17,11 @@ ini_set('max_execution_time', 3600);
 ini_set('display_errors', $debug ? 'On' : 'Off');
 error_reporting($debug ? E_ALL : 0);
 
-if(!file_exists(DATABASE)){
-    mkdir(DATABASE);
-}
+Query::setConn(
+    new Sz\Conn\Connection(
+        'ancient',
+        'localhost',
+        'root',
+        ''
+    )
+);

@@ -2,13 +2,13 @@
 
 namespace Ancient\Config;
 
-use Ancient\Models\Person;
+use Ancient\Models\Character;
 use Ancient\Models\Question;
 
 class Database
 {
-    const FILE_PEOPLES   = DATABASE . 'peoples.json';
-    const FILE_QUESTIONS = DATABASE . 'questions.json';
+    const FILE_PEOPLES   = 'peoples.json';
+    const FILE_QUESTIONS = 'questions.json';
 
     private array $questions;
     private array $people;
@@ -30,7 +30,7 @@ class Database
         if (file_exists(self::FILE_PEOPLES)) {
             $people = @json_decode(file_get_contents(self::FILE_PEOPLES));
             foreach ($people as $person) {
-                $this->people[] = new Person($person->id, $person->name);
+                $this->people[] = new Character($person->id, $person->name);
             }
         }
 
@@ -38,9 +38,9 @@ class Database
             $questions = @json_decode(file_get_contents(self::FILE_QUESTIONS));
             foreach ($questions as $question) {
                 $personQuestion = new Question($question->id, $question->question);
-                /** @var Person $person */
+                /** @var Character $person */
                 foreach ($question->people as $person) {
-                    $personQuestion->addPerson(new Person($person->id, $person->name));
+                    $personQuestion->addPerson(new Character($person->id, $person->name));
                 }
 
                 $this->questions[] = $personQuestion;
@@ -64,9 +64,9 @@ class Database
      *
      * @param array $array
      *
-     * @return Person|Question|null
+     * @return Character|Question|null
      */
-    private function getLast(array $array = []): Person|Question|null
+    private function getLast(array $array = []): Character|Question|null
     {
         if (empty($array)) {
             return null;
@@ -88,18 +88,18 @@ class Database
         return $this->people ?? [];
     }
 
-    public function getLastPerson(): ?Person
+    public function getLastPerson(): ?Character
     {
         return $this->getLast($this->getPeople());
     }
 
-    public function getPerson(string $id): ?Person
+    public function getPerson(string $id): ?Character
     {
         if (empty($this->people)) {
             return null;
         }
 
-        /** @var Person $person */
+        /** @var Character $person */
         foreach ($this->people as $person) {
             if ($person->id == $id) {
                 return $person;
@@ -109,13 +109,13 @@ class Database
         return null;
     }
 
-    public function getPersonByName(string $name): ?Person
+    public function getPersonByName(string $name): ?Character
     {
         if (empty($this->people)) {
             return null;
         }
 
-        /** @var Person $person */
+        /** @var Character $person */
         foreach ($this->people as $person) {
             if ($person->name == $name) {
                 return $person;
@@ -144,7 +144,7 @@ class Database
         return $questions;
     }
 
-    public function addPerson(Person $person): void
+    public function addPerson(Character $person): void
     {
         if ($this->getPerson($person->id) || $this->getPersonByName($person->name)) {
             return;
@@ -159,7 +159,7 @@ class Database
             return;
         }
 
-        /** @var Person $person */
+        /** @var Character $person */
         foreach ($this->people as $index => $person) {
             if ($person->id == $id) {
                 unset($this->people[$index]);
@@ -167,7 +167,7 @@ class Database
 
                 /** @var Question $question Remove as pessoas das questões também */
                 foreach ($this->questions as $iQ => $question) {
-                    /** @var Person $person */
+                    /** @var Character $person */
                     foreach ($question->people as $iP => $personQuestion) {
                         if ($personQuestion->id == $person->id) {
                             unset($this->questions[$iQ]->people[$iP]);
@@ -181,7 +181,7 @@ class Database
         }
     }
 
-    public function updatePerson(Person $newPerson): void
+    public function updatePerson(Character $newPerson): void
     {
         if (empty($this->people)) {
             return;
@@ -193,7 +193,7 @@ class Database
 
                 /** @var Question $question Atualiza as pessoas das questões também */
                 foreach ($this->questions as $iQ => $question) {
-                    /** @var Person $personQuestion */
+                    /** @var Character $personQuestion */
                     foreach ($question->people as $iP => $personQuestion) {
                         if ($personQuestion->id == $newPerson->id) {
                             $this->questions[$iQ]->people[$iP] = $newPerson;
