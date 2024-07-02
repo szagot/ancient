@@ -1,18 +1,18 @@
-🔁 Banco
-	🔁 characters (id, name)
-	🔳 questions (id, question)
-	🔳 character_question (character_id, question_id)
-	🔳 room (code, name, fase, character_id, gamer_id, qt_rounds)
-	🔳 gamer (id, name, points, room_code, finished)
-	
+✅ Banco (ancient)
+	✅ characters (id, name)
+	✅ questions (id, question)
+	✅ character_question (character_id, question_id)
+	✅ gamer (id, name, points, room_code, finished)
+	✅ room (code, fase, secret_character_id, out_gamer_id, qt_rounds, created_at)
+
 	Obs: 
 		room.fase define a fase em que todos se encontram na sala (de 0 a 4, sendo o final o mesmo que a preparação). 
 		gamer.finished define se a pessoa finalizou a parte dela naquela room.fase
 
-🔳 Preparação
-	🔳 Criação de sala (code)
+🔁 Preparação
+	🔁 Criação de sala (code)
 	🔳 Conexão de sala (via code)
-	🔳 Controle de pessoas na sala (adm pode excluir pessoas)
+	🔳 Controle de pessoas na sala (qdo todos saem da sala, ela é excluída)
 	🔳 Inicio quando tiver o suficiente
 
 🔳 Personagem
