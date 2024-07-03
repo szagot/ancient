@@ -2,7 +2,6 @@
 
 namespace Ancient\Service;
 
-use Ancient\Config\Database;
 use Sz\Config\Uri;
 
 class Control

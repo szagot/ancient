@@ -2,13 +2,11 @@
 
 namespace Ancient\Service;
 
-use Ancient\Config\Database;
 use Ancient\Config\Output;
 use Ancient\Control\Crud;
 use Ancient\Exception\AncientException;
 use Ancient\Models\Character;
 use Sz\Config\Uri;
-use Sz\Conn\Query;
 
 class Characters
 {
