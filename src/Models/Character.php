@@ -2,10 +2,9 @@
 
 namespace Ancient\Models;
 
-use Ancient\Control\Crud;
 use Sz\Conn\Query;
 
-    class Character
+class Character
     {
         const TABLE = 'characters';
 

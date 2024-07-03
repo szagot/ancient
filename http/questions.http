@@ -8,3 +8,25 @@ Authorization: Basic {{auth}}
 ###
 GET http://localhost:8888/questions/1/characters
 Authorization: Basic {{auth}}
+
+###
+POST http://localhost:8888/questions
+Content-Type: application/json
+Authorization: Basic {{auth}}
+
+{
+  "question": "Foi um profeta?"
+}
+
+###
+PUT http://localhost:8888/questions/3
+Content-Type: application/json
+Authorization: Basic {{auth}}
+
+{
+  "question": "Foi um profeta ou profetisa?"
+}
+
+###
+DELETE http://localhost:8888/questions/3
+Authorization: Basic {{auth}}
