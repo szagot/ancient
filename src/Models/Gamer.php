@@ -3,6 +3,7 @@
 namespace Ancient\Models;
 
 use Ancient\Control\Crud;
+use Ancient\Exception\AncientException;
 
 class Gamer
 {
@@ -14,6 +15,9 @@ class Gamer
     public ?int    $room_code;
     public ?bool   $finished = false;
 
+    /**
+     * @throws AncientException
+     */
     public function getRoom(): ?Room
     {
         return Crud::get(Room::class, 'code', $this->room_code);

@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `gamer` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` char(50) DEFAULT NULL,
   `points` int(10) unsigned DEFAULT 0,
-  `room_code` char(50) DEFAULT NULL,
+  `room_code` char(6) DEFAULT NULL,
   `finished` tinyint(1) unsigned DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `FK_ROOM` (`room_code`),
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `questions` (
 
 DROP TABLE IF EXISTS `room`;
 CREATE TABLE IF NOT EXISTS `room` (
-  `code` char(50) NOT NULL,
+  `code` char(6) NOT NULL,
   `fase` tinyint(1) unsigned NOT NULL DEFAULT 0,
   `secret_character_id` int(10) unsigned DEFAULT NULL,
   `out_gamer_id` int(10) unsigned DEFAULT NULL,
