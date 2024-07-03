@@ -24,6 +24,9 @@ class Characters
 
                 /** @var Character $character */
                 $character = Crud::get(Character::class, 'id', $id);
+                if (!$character) {
+                    Output::error('Personagem não encontrado.', 404);
+                }
 
                 // GET /{id}/questions
                 if ($uri->detalhe == 'questions') {
@@ -55,35 +58,41 @@ class Characters
 
                 break;
 
-            case 'DELETE':
-                if (empty($id)) {
-                    http_response_code(400);
-                    die(json_encode(['msg' => 'Informe o ID para deleção']));
-                }
-
-//                $db->removePerson($id);
-//                $db->persist();
-                http_response_code(204);
-                break;
-
             case 'PUT':
             case 'PATCH':
                 if (empty($id)) {
-                    http_response_code(400);
-                    die(json_encode(['msg' => 'Informe o ID para atualização']));
+                    Output::error('Informe o ID para atualização.');
                 }
 
                 $name = $uri->getParam('name');
                 if (empty($name)) {
-                    http_response_code(400);
-                    die(json_encode(['msg' => 'Informe o nome do personagem']));
+                    Output::error('Informe o nome do personagem.');
                 }
 
-//                $person = $db->getPerson($id);
-//                $person->name = $name;
-//                $db->updatePerson($person);
-//                $db->persist();
-                http_response_code(204);
+                $character = Crud::get(Character::class, 'id', $id);
+                if (!$character) {
+                    Output::error('Personagem não encontrado.');
+                }
+
+                $character->name = $name;
+                if (!Crud::update(Character::class, 'id', $character)) {
+                    Output::error('Não foi possível atualizar agora.');
+                }
+
+                Output::success([], 204);
+
+                break;
+
+            case 'DELETE':
+                if (empty($id)) {
+                    Output::error('Informe o ID para deletar.');
+                }
+
+                if (!Crud::delete(Character::class, 'id', $id)) {
+                    Output::error('Não foi possível excluir agora.');
+                }
+
+                Output::success([], 204);
                 break;
         }
     }

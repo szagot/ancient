@@ -19,10 +19,6 @@ Authorization: Basic {{auth}}
 }
 
 ###
-DELETE http://localhost:8888/characters/4
-Authorization: Basic {{auth}}
-
-###
 PUT http://localhost:8888/characters/1
 Content-Type: application/json
 Authorization: Basic {{auth}}
@@ -30,3 +26,7 @@ Authorization: Basic {{auth}}
 {
   "name": "Abraão"
 }
+
+###
+DELETE http://localhost:8888/characters/13
+Authorization: Basic {{auth}}
