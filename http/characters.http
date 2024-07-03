@@ -15,7 +15,7 @@ Content-Type: application/json
 Authorization: Basic {{auth}}
 
 {
-  "name": "Absalão"
+  "name": "Noé"
 }
 
 ###
@@ -28,5 +28,5 @@ Authorization: Basic {{auth}}
 }
 
 ###
-DELETE http://localhost:8888/characters/13
+DELETE http://localhost:8888/characters/18
 Authorization: Basic {{auth}}

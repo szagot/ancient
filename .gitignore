@@ -1,5 +1,6 @@
 .idea/
 vendor/
 db/
+logs/
 composer.lock
 test*.*

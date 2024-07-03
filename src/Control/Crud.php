@@ -2,6 +2,7 @@
 
 namespace Ancient\Control;
 
+use Ancient\Exception\AncientException;
 use Sz\Conn\Query;
 
 class Crud
@@ -14,15 +15,14 @@ class Crud
      * @param mixed  $value   Valor do identificador
      *
      * @return mixed
+     * @throws AncientException
      */
     static public function get(string $class, string $idField, mixed $value): mixed
     {
-        if (!$table = $class::TABLE ?? null) {
-            return null;
-        }
+        $table = self::getTable($class);
 
         return Query::exec(
-            "SELECT * FROM $table WHERE $idField = :value",
+            "SELECT * FROM {$table} WHERE $idField = :value",
             [
                 'value' => $value,
             ],
@@ -36,12 +36,12 @@ class Crud
      * @param string $class Classe relacionada a pesquisa. Ela deve possuir uma const TABLE com o nome da tabela.
      *
      * @return array
+     * @throws AncientException
      */
     static public function getAll(string $class): array
     {
-        if (!$table = $class::TABLE ?? null) {
-            return [];
-        }
+        $table = self::getTable($class);
+
         return Query::exec("SELECT * FROM $table", null, $class) ?? [];
     }
 
@@ -53,12 +53,11 @@ class Crud
      * @param mixed  $value       Valor da pesquisa. Use % como coringa
      *
      * @return array
+     * @throws AncientException
      */
     static public function search(string $class, string $searchField, mixed $value): array
     {
-        if (!$table = $class::TABLE ?? null) {
-            return [];
-        }
+        $table = self::getTable($class);
 
         return Query::exec(
             "SELECT * FROM $table WHERE $searchField LIKE :value",
@@ -77,12 +76,11 @@ class Crud
      * @param mixed  $instance Objeto a ser adicionado
      *
      * @return int|null
+     * @throws AncientException
      */
     static public function insert(string $class, string $idField, mixed $instance): ?int
     {
-        if (!$table = $class::TABLE ?? null) {
-            return null;
-        }
+        $table = self::getTable($class);
 
         unset($instance->$idField);
         $instanceVars = get_object_vars($instance);
@@ -91,8 +89,7 @@ class Crud
 
         $insert = Query::exec("INSERT INTO $table ($fields) VALUES ($fieldsValues)", $instanceVars, $class) ?? [];
         if (!$insert) {
-            error_log(print_r(Query::getLog(), true));
-            return null;
+            throw new AncientException('Não foi possível inserir o registro no momento.');
         }
 
         return Query::getLog(true)['lastId'] ?? null;
@@ -105,13 +102,12 @@ class Crud
      * @param string $idField  Nome do campo identificador
      * @param mixed  $instance Objeto a ser alterado
      *
-     * @return bool
+     * @return void
+     * @throws AncientException
      */
-    static public function update(string $class, string $idField, mixed $instance): bool
+    static public function update(string $class, string $idField, mixed $instance): void
     {
-        if (!$table = $class::TABLE ?? null) {
-            return false;
-        }
+        $table = self::getTable($class);
 
         $instanceVars = get_object_vars($instance);
         $fields = [];
@@ -129,11 +125,8 @@ class Crud
             $class
         ) ?? [];
         if (!$update) {
-            error_log(print_r(Query::getLog(), true));
-            return false;
+            throw new AncientException("Não foi possível atualizar o registro de ID {$instance->$idField} no momento.");
         }
-
-        return true;
     }
 
     /**
@@ -143,13 +136,12 @@ class Crud
      * @param string $idField Nome do campo identificador
      * @param mixed  $value   Valor do identificador a ser deletado
      *
-     * @return bool
+     * @return void
+     * @throws AncientException
      */
-    static public function delete(string $class, string $idField, mixed $value): bool
+    static public function delete(string $class, string $idField, mixed $value): void
     {
-        if (!$table = $class::TABLE ?? null) {
-            return false;
-        }
+        $table = self::getTable($class);
 
         $delete = Query::exec(
             "DELETE FROM $table WHERE {$idField} = :{$idField}",
@@ -160,10 +152,21 @@ class Crud
         ) ?? [];
 
         if (!$delete) {
-            error_log(print_r(Query::getLog(), true));
-            return false;
+            throw new AncientException("Não foi possível deletar o registro de ID {$value} no momento.");
+        }
+    }
+
+    /**
+     * Devolve o valor declarado de TABLE
+     *
+     * @throws AncientException
+     */
+    private static function getTable(string $class): ?string
+    {
+        if (!defined($class . '::TABLE')) {
+            throw new AncientException('Tabela não declarada', false);
         }
 
-        return true;
+        return $class::TABLE;
     }
 }
