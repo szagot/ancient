@@ -44,7 +44,7 @@ class Room
         }
     }
 
-    public static function newRoom()
+    public static function newRoom(): Room
     {
         $room = new Room();
         $rand = md5(uniqid(rand(), true));
