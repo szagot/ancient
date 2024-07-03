@@ -2,6 +2,7 @@
 
 namespace Ancient\Models;
 
+use Ancient\Control\Crud;
 use DateTime;
 use Exception;
 
@@ -18,14 +19,12 @@ class Room
 
     public function getSecretCharacter(): ?Character
     {
-        // TODO
-        return null;
+        return Crud::get(Character::class, 'id', $this->secret_character_id);
     }
 
     public function getOutOfTheLoopGamer(): ?Gamer
     {
-        // TODO
-        return null;
+        return Crud::get(Gamer::class, 'id', $this->out_gamer_id);
     }
 
     public function getCreatedAt(): ?DateTime

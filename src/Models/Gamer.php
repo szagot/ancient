@@ -2,6 +2,8 @@
 
 namespace Ancient\Models;
 
+use Ancient\Control\Crud;
+
 class Gamer
 {
     const TABLE = 'gamers';
@@ -14,7 +16,6 @@ class Gamer
 
     public function getRoom(): ?Room
     {
-        // TODO
-        return null;
+        return Crud::get(Room::class, 'code', $this->room_code);
     }
 }
