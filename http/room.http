@@ -1,3 +1,5 @@
+# Gerenciamento da Sala e Jogadores da Sala
+
 ### Criando a Sala
 POST http://localhost:8888/room
 Content-Type: application/json
@@ -8,36 +10,36 @@ Authorization: Basic {{auth}}
 }
 
 ### Adicionando Jogadores
-POST http://localhost:8888/room/4A4B3C
+POST http://localhost:8888/room/3195DB
 Content-Type: application/json
 Authorization: Basic {{auth}}
 
 {
-  "name": "daniel"
+  "name": "alini"
 }
 
 ### Sala
-GET http://localhost:8888/room/4A4B3C
+GET http://localhost:8888/room/3195DB
 Content-Type: application/json
 Authorization: Basic {{auth}}
 
 ### Jogadores da Sala
-GET http://localhost:8888/room/4A4B3C/gamers
+GET http://localhost:8888/room/3195DB/gamers
 Content-Type: application/json
 Authorization: Basic {{auth}}
 
 ### Jogador Fora da Rodada
-GET http://localhost:8888/room/4A4B3C/outOfLoop
+GET http://localhost:8888/room/3195DB/outOfLoop
 Content-Type: application/json
 Authorization: Basic {{auth}}
 
 ### Personagem Secreto
-GET http://localhost:8888/room/4A4B3C/secret
+GET http://localhost:8888/room/3195DB/secret
 Content-Type: application/json
 Authorization: Basic {{auth}}
 
 ### Deixando a Sala
-DELETE http://localhost:8888/room/4A4B3C
+DELETE http://localhost:8888/room/3195DB
 Content-Type: application/json
 Authorization: Basic {{auth}}
 

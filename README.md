@@ -41,8 +41,6 @@ Joguem várias rodadas. Quando não quiserem mais jogar com o time atual, basta 
 
 ## Endpoints básicos
 
-> **Obs**.: Na pasta `/http/` do projeto tem um exemplo de cada requisição para cada endpoint
-
 Os endpoints disponíveis são:
 
 * `/characters`: Controle os personagens do jogo
@@ -60,4 +58,6 @@ Para todos eles é possível usar os métodos:
 
 * `/room`: Controle da sala e dos jogadores nela.
 * `/game`: Controle do jogo.
+
+Para detalhes das requisições, na pasta `/http/` do projeto tem um exemplo de cada requisição para cada endpoint.
 

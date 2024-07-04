@@ -17,16 +17,24 @@ class Control
         }
 
         switch (strtolower($uri->pagina)) {
+            // Perguntas
             case 'questions':
                 Questions::run($uri);
                 break;
 
+            // Personagens
             case 'characters':
                 Characters::run($uri);
                 break;
 
+            // Sala e Jogadores
             case 'room':
                 Room::run($uri);
+                break;
+
+            // Jogo
+            case 'game':
+                Game::run($uri);
                 break;
         }
 

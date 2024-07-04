@@ -1,0 +1,12 @@
+# Gerenciamento do Jogo
+# Para todos os endpoints informar: /game/{room code}/{gamer id}
+
+### Pega os dados do jogador.
+GET http://localhost:8888/game/3195DB/3
+Content-Type: application/json
+Authorization: Basic {{auth}}
+
+### Permite o início do jogo
+GET http://localhost:8888/game/3195DB/3/allow
+Content-Type: application/json
+Authorization: Basic {{auth}}
