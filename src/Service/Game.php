@@ -119,6 +119,9 @@ class Game
                 $room->fase++;
                 Crud::update(ModelRoom::class, 'code', $room);
 
+                // TODO: repensar isso, porque o jogo precisa saber quando TODOS os jogadores avançaram a fase
+                // criar tabela de estado do tabuleiro
+
                 return [
                     'room'      => $room,
                     'outOfLoop' => $room->getOutOfTheLoopGamer(),
@@ -129,6 +132,8 @@ class Game
                 // Pega as perguntas a serem feitas
                 $room->fase++;
                 Crud::update(ModelRoom::class, 'code', $room);
+
+                // TODO: repensar isso, porque cada jogador receberá uma pergunta para fazer para o próximo
 
                 return [
                     'room'      => $room,
