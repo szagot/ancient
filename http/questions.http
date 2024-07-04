@@ -18,11 +18,11 @@ Content-Type: application/json
 Authorization: Basic {{auth}}
 
 {
-  "question": "Foi um patriarca?"
+  "question": "Foi um profeta?"
 }
 
 ### Atualiza uma pergunta
-PUT http://localhost:8888/questions/1
+PUT http://localhost:8888/questions/2
 Content-Type: application/json
 Authorization: Basic {{auth}}
 

@@ -34,15 +34,25 @@ class Crud
      * Pega todos os registros
      *
      * @param string $class Classe relacionada a pesquisa. Ela deve possuir uma const TABLE com o nome da tabela.
+     * @param int    $offset
+     * @param int    $limit
+     * @param bool   $shuffled
      *
      * @return array
      * @throws AncientException
      */
-    static public function getAll(string $class): array
+    static public function getAll(string $class, int $offset = 0, int $limit = 0, bool $shuffled = false): array
     {
         $table = self::getTable($class);
+        $filter = '';
+        if($shuffled){
+            $filter .= ' ORDER BY RAND()';
+        }
+        if ($limit > 0) {
+            $filter .= " LIMIT {$offset}, {$limit}";
+        }
 
-        return Query::exec("SELECT * FROM $table", null, $class) ?? [];
+        return Query::exec("SELECT * FROM $table {$filter}", null, $class) ?? [];
     }
 
     /**

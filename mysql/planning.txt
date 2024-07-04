@@ -9,26 +9,26 @@
 		room.fase define a fase em que todos se encontram na sala (de 0 a 4, sendo o final o mesmo que a preparação). 
 		gamer.finished define se a pessoa finalizou a parte dela naquela room.fase
 
-🔁 Preparação
+✅ Preparação
 	✅ Criação de sala (code)
 	✅ Conexão de sala (via code)
 	✅ Controle de pessoas na sala (qdo todos saem da sala, ela é excluída)
-	🔁 Inicio quando tiver o suficiente
+	✅ Inicio quando tiver o suficiente
 
-🔳 Personagem
-	🔳 Ativa o terminal de cada pessoa com seu personagem secreto, ou o aviso de fora da rodada
+🔁 Personagem
+	🔁 Ativa o terminal de cada pessoa com seu personagem secreto, ou o aviso de fora da rodada
 	🔳 Aguarda o aviso de que todos viram
 
 🔳 Perguntas
 	🔳 Ativa o terminal da pessoa que irá fazer a próxima pergunta.
-	🔳 Aguarda o sinal de que já perguntou, ativando o proximo
+	🔳 Aguarda o sinal de que já perguntou, ativando o próximo
 
 🔳 Votação
 	🔳 Ativa o terminal de cada pessoa com a votação (menos quem está fora)
-	🔳 Quem está fora, recebe a lista de personagens (junto com uma dica) pra tentar adivinhar quem é.
+	🔳 Quem está fora, recebe a lista de personagens (com uma dica) para tentar adivinhar quem é.
 	🔳 Aguarda que todos tenham respondido
 
 🔳 Final
 	🔳 Todos recebem o aviso de quem estava fora da rodada e a pontuação.
 	🔳 Aguarda o aviso de que todos querem novo turno.
-	🔳 Se alguem sair da jogada, e não tiver o minimo (3) não deixa iniciar novo turno, atpe ter pelo menos 3.
+	🔳 Se alguém sair da jogada, e não tiver o mínimo (3) não deixa iniciar novo turno, até ter pelo menos 3.

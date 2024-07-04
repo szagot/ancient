@@ -6,11 +6,14 @@ use Ancient\Config\Output;
 use Ancient\Control\Crud;
 use Ancient\Exception\AncientException;
 use Ancient\Models\Gamer;
+use Ancient\Models\Question;
 use Ancient\Models\Room as ModelRoom;
 use Sz\Config\Uri;
 
 class Game
 {
+    private static array $questions = [];
+
     public static function run(Uri $uri): void
     {
         try {
@@ -54,6 +57,8 @@ class Game
                     }
 
                 case 'POST':
+                    ;
+                    Output::success(self::nextFase($room), Output::POST_SUCCESS);
             }
 
         } catch (AncientException $e) {
@@ -67,9 +72,76 @@ class Game
      * @param ModelRoom $room
      *
      * @return bool
+     * @throws AncientException
      */
     private static function allowGame(ModelRoom $room): bool
     {
-        return count($room->getGamers()) >= 3;
+        return count($room->getGamers()) >= 3 && !empty(self::getQuestions($room));
+    }
+
+    /**
+     * @throws AncientException
+     */
+    private static function getQuestions(ModelRoom $room, bool $force = false): array
+    {
+        if (!$force && !empty(self::$questions)) {
+            return self::$questions;
+        }
+
+        $qtGamers = count($room->getGamers());
+        $qtQuestions = $qtGamers * (($qtGamers > 3) ? 2 : 3);
+        self::$questions = Crud::getAll(Question::class, 0, $qtQuestions, true);
+
+        // Se a quantidade não for mínima, zera as perguntas
+        if (count(self::$questions) < $qtQuestions) {
+            self::$questions = [];
+        }
+
+        return self::$questions;
+    }
+
+    /**
+     * Controle de fases
+     *
+     * @throws AncientException
+     */
+    private static function nextFase(ModelRoom $room): array
+    {
+        if (!self::allowGame($room)) {
+            return [];
+        }
+
+        switch ($room->fase) {
+            // Inicio
+            case 0:
+                // Seleciona oo personagem secreto e o jogador fora da rodada
+                $room->setSecrets();
+                $room->fase++;
+                Crud::update(ModelRoom::class, 'code', $room);
+
+                return [
+                    'room'      => $room,
+                    'outOfLoop' => $room->getOutOfTheLoopGamer(),
+                    'secret'    => $room->getSecretCharacter(),
+                ];
+
+            case 1:
+                // Pega as perguntas a serem feitas
+                $room->fase++;
+                Crud::update(ModelRoom::class, 'code', $room);
+
+                return [
+                    'room'      => $room,
+                    'questions' => self::getQuestions($room, true),
+                ];
+
+            default:
+                // TODO: remover, é apenas para teste
+                $room->fase = 0;
+                Crud::update(ModelRoom::class, 'code', $room);
+                return [
+                    'room' => $room,
+                ];
+        }
     }
 }

@@ -57,7 +57,7 @@ class Room
     }
 
 
-    public function setSecrets()
+    public function setSecrets(): void
     {
         if (!$this->code) {
             return;

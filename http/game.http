@@ -10,3 +10,8 @@ Authorization: Basic {{auth}}
 GET http://localhost:8888/game/3195DB/3/allow
 Content-Type: application/json
 Authorization: Basic {{auth}}
+
+### Avança a fase
+POST http://localhost:8888/game/3195DB/3
+Content-Type: application/json
+Authorization: Basic {{auth}}
