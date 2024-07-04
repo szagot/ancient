@@ -12,7 +12,7 @@ class Gamer
     public int     $id;
     public ?string $name;
     public ?int    $points   = 0;
-    public ?int    $room_code;
+    public ?string $room_code;
     public ?bool   $finished = false;
 
     /**
@@ -21,5 +21,13 @@ class Gamer
     public function getRoom(): ?Room
     {
         return Crud::get(Room::class, 'code', $this->room_code);
+    }
+
+    public static function newGamer(string $name, string $roomCode): Gamer
+    {
+        $gamer = new Gamer();
+        $gamer->name = $name;
+        $gamer->room_code = $roomCode;
+        return $gamer;
     }
 }

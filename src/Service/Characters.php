@@ -36,8 +36,6 @@ class Characters
                     // GET {id}
                     Output::success($character);
 
-                    break;
-
                 case 'POST':
                     $name = $uri->getParam('name');
                     if (empty($name)) {
@@ -52,9 +50,7 @@ class Characters
 
                     $id = Crud::insert(Character::class, 'id', $uri->getParametros());
 
-                    Output::success(['id' => $id], 201);
-
-                    break;
+                    Output::success(['id' => $id], Output::POST_SUCCESS);
 
                 case 'PUT':
                 case 'PATCH':
@@ -75,9 +71,7 @@ class Characters
                     $character->name = $name;
                     Crud::update(Character::class, 'id', $character);
 
-                    Output::success([], 204);
-
-                    break;
+                    Output::success([], Output::PUT_SUCCESS);
 
                 case 'DELETE':
                     if (empty($id)) {
@@ -86,8 +80,7 @@ class Characters
 
                     Crud::delete(Character::class, 'id', $id);
 
-                    Output::success([], 204);
-                    break;
+                    Output::success([], Output::DELETE_SUCCESS);
             }
         } catch (AncientException $e) {
             Output::error($e->getMessage());

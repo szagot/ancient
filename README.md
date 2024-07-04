@@ -2,27 +2,50 @@
 
 Controle os personagens e as perguntas do jogo "Out of the Loop" (Fora da Rodada).
 
-## Sobre o Jogo
+## Sobre o Jogo "Fora da Rodada"
 
-Inicialmente o app escolhe um personagem, e cada jogador irá receber o personagem escolhido. Menos um. Esse jogador
-receberá a mensagem: "Fora da Rodada".
+Joguinho para se divertir com a galera!
 
-O objetivo é descobrir quem está fora. Se a maioria não descobrir, o jogador fora da rodada ganha.
-Se a maioria descobrir, ele perde e os demais ganham.
+Crie uma sala, ou entre em uma já criada utilizando o código passado.
 
-As perguntas são sempre do tipo "Sim ou Não", e o app irá escolher quem faz a pergunta pra quem.
+Deve haver pelo menos 3 jogadores. Porém, quanto mais jogarem, mais difícil e divertido fica!
 
-O app também irá determinar a quantidade total de perguntas por rodada antes de pedir para que cada um vote em quem
-ele acha que está fora.
+**Como Jogar?**
 
-Tudo isso é feito no `front` da aplicação. O `back` (esta API) serve apenas como banco de dados para os personages
-e perguntas.
+O jogo irá reservar um personagem secreto.
 
-## Endpoints
+Cada um vai poder ver qual é esse personagem. Olhe o seu e passe para o próximo.
+
+Um dos jogadores não receberá esse personagem, pois estará marcado como "Fora da Rodada".
+
+Todos terão oportunidade de fazer 2 perguntas para outros jogadores (se houverem apenas 3 jogadores, então serão 3
+perguntas cada).
+
+Depois das perguntas, todos terão de votar em quem acha que está fora da rodada, e o que está fora deve tentar adivinhar
+qual é o personagem secreto.
+
+**Pontuação:**
+
+* 25 pontos para cada jogador que acertar quem está fora da rodada.
+* 100 pontos para todos os jogadores (exceto o que está fora) caso a maioria acerte quem está fora da rodada.
+* 50 pontos para o jogador que está fora da rodada se a maioria não acertar que é ele.
+* 125 pontos para quem está fora da rodada se ele acertar o personagem secreto.
+
+**Quem Ganha?**
+
+Quem tiver mais pontos! (ah vá!)
+
+Joguem várias rodadas. Quando não quiserem mais jogar com o time atual, basta ver a pontuação final!
+
+---
+
+## Endpoints básicos
+
+> **Obs**.: Na pasta `/http/` do projeto tem um exemplo de cada requisição para cada endpoint
 
 Os endpoints disponíveis são:
 
-* `/people`: Controle os personagens do jogo
+* `/characters`: Controle os personagens do jogo
 * `/questions`: Controle as perguntas do jogo
 
 Para todos eles é possível usar os métodos:
@@ -33,4 +56,8 @@ Para todos eles é possível usar os métodos:
 * **PUT**: Atualiza o registro. No caso de `questions`, aqui você informa a lista de IDs de personagens para os quais
   aquela pergunta é verdadeira.
 
-> **Obs**.: Na pasta `/http/` do projeto tem um exemplo de cada requisição para cada endpoint
+## Endpoints para o Game
+
+* `/room`: Controle da sala e dos jogadores nela.
+* `/game`: Controle do jogo.
+

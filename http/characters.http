@@ -1,25 +1,17 @@
+### Pega todos os Personagens
 GET http://localhost:8888/characters
 Authorization: Basic {{auth}}
 
-###
+### Pega um personagem específico
 GET http://localhost:8888/characters/1
 Authorization: Basic {{auth}}
 
-###
+### Pega as perguntas relacioadas àquele personagem
 GET http://localhost:8888/characters/1/questions
 Authorization: Basic {{auth}}
 
-###
+### Cria um novo personagem
 POST http://localhost:8888/characters
-Content-Type: application/json
-Authorization: Basic {{auth}}
-
-{
-  "name": "Noé"
-}
-
-###
-PUT http://localhost:8888/characters/1
 Content-Type: application/json
 Authorization: Basic {{auth}}
 
@@ -27,6 +19,15 @@ Authorization: Basic {{auth}}
   "name": "Abraão"
 }
 
-###
-DELETE http://localhost:8888/characters/18
+### Altera um personagem
+PUT http://localhost:8888/characters/2
+Content-Type: application/json
+Authorization: Basic {{auth}}
+
+{
+  "name": "Abrão"
+}
+
+### Apaga um personagem
+DELETE http://localhost:8888/characters/2
 Authorization: Basic {{auth}}

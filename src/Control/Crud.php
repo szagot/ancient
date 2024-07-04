@@ -82,7 +82,9 @@ class Crud
     {
         $table = self::getTable($class);
 
-        unset($instance->$idField);
+        if (!empty($idField)) {
+            unset($instance->$idField);
+        }
         $instanceVars = get_object_vars($instance);
         $fieldsValues = ':' . implode(', :', array_keys($instanceVars));
         $fields = implode(', ', array_keys($instanceVars));

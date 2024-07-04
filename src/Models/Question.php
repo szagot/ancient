@@ -19,6 +19,6 @@ class Question
                 'id' => $this->id,
             ],
             Character::class
-        );
+        ) ?? [];
     }
 }

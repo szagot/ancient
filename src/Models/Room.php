@@ -6,10 +6,11 @@ use Ancient\Control\Crud;
 use Ancient\Exception\AncientException;
 use DateTime;
 use Exception;
+use Sz\Conn\Query;
 
 class Room
 {
-    const TABLE = 'room';
+    const TABLE = 'rooms';
 
     // Código hexadecimal de 6 dígitos
     public string  $code;
@@ -44,6 +45,40 @@ class Room
         }
     }
 
+    public function getGamers(): array
+    {
+        return Query::exec(
+            'SELECT g.* FROM gamers g INNER JOIN rooms r ON g.room_code = r.code WHERE r.code = :code',
+            [
+                'code' => $this->code,
+            ],
+            Gamer::class
+        ) ?? [];
+    }
+
+
+    public function setSecrets()
+    {
+        if (!$this->code) {
+            return;
+        }
+
+        $secret = Query::exec(
+            'SELECT * FROM characters ORDER BY RAND() LIMIT 1',
+            null,
+            Character::class
+        )[0] ?? null;
+        if($secret){
+            $this->secret_character_id = $secret->id;
+        }
+
+        $gamers = $this->getGamers();
+        $outOfLoop = $gamers[rand(0, count($gamers) - 1)];
+        if($outOfLoop){
+            $this->out_gamer_id = $outOfLoop->id;
+        }
+    }
+
     public static function newRoom(): Room
     {
         $room = new Room();
@@ -53,4 +88,5 @@ class Room
         $room->created_at = date('Y-m-d H:i:s');
         return $room;
     }
+
 }

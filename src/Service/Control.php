@@ -2,6 +2,7 @@
 
 namespace Ancient\Service;
 
+use Ancient\Config\Output;
 use Sz\Config\Uri;
 
 class Control
@@ -14,17 +15,22 @@ class Control
             header('WWW-Authenticate: Basic realm="Area Restrita"');
             exit('Acesso não autorizado.');
         }
-        
+
         switch (strtolower($uri->pagina)) {
             case 'questions':
                 Questions::run($uri);
                 break;
+
             case 'characters':
                 Characters::run($uri);
                 break;
+
+            case 'room':
+                Room::run($uri);
+                break;
         }
 
-        die(json_encode([]));
+        Output::success();
     }
 
     public static function cors(): void

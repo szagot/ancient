@@ -10,10 +10,10 @@
 		gamer.finished define se a pessoa finalizou a parte dela naquela room.fase
 
 🔁 Preparação
-	🔁 Criação de sala (code)
-	🔳 Conexão de sala (via code)
-	🔳 Controle de pessoas na sala (qdo todos saem da sala, ela é excluída)
-	🔳 Inicio quando tiver o suficiente
+	✅ Criação de sala (code)
+	✅ Conexão de sala (via code)
+	✅ Controle de pessoas na sala (qdo todos saem da sala, ela é excluída)
+	🔁 Inicio quando tiver o suficiente
 
 🔳 Personagem
 	🔳 Ativa o terminal de cada pessoa com seu personagem secreto, ou o aviso de fora da rodada

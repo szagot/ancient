@@ -30,8 +30,8 @@ CREATE TABLE IF NOT EXISTS `character_question` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
-DROP TABLE IF EXISTS `gamer`;
-CREATE TABLE IF NOT EXISTS `gamer` (
+DROP TABLE IF EXISTS gamers;
+CREATE TABLE IF NOT EXISTS `gamers` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` char(50) DEFAULT NULL,
   `points` int(10) unsigned DEFAULT 0,
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `gamer` (
   `finished` tinyint(1) unsigned DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `FK_ROOM` (`room_code`),
-  CONSTRAINT `FK_ROOM` FOREIGN KEY (`room_code`) REFERENCES `room` (`code`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `FK_ROOM` FOREIGN KEY (`room_code`) REFERENCES rooms (`code`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
@@ -51,8 +51,8 @@ CREATE TABLE IF NOT EXISTS `questions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
-DROP TABLE IF EXISTS `room`;
-CREATE TABLE IF NOT EXISTS `room` (
+DROP TABLE IF EXISTS rooms;
+CREATE TABLE IF NOT EXISTS rooms (
   `code` char(6) NOT NULL,
   `fase` tinyint(1) unsigned NOT NULL DEFAULT 0,
   `secret_character_id` int(10) unsigned DEFAULT NULL,
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `room` (
   PRIMARY KEY (`code`),
   KEY `FK_SECRET` (`secret_character_id`),
   KEY `FK_OUT_OF_LOOP` (`out_gamer_id`),
-  CONSTRAINT `FK_OUT_OF_LOOP` FOREIGN KEY (`out_gamer_id`) REFERENCES `gamer` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `FK_OUT_OF_LOOP` FOREIGN KEY (`out_gamer_id`) REFERENCES gamers (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `FK_SECRET` FOREIGN KEY (`secret_character_id`) REFERENCES `characters` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

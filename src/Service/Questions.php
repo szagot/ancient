@@ -33,8 +33,6 @@ class Questions
                     // GET {id}
                     Output::success($question);
 
-                    break;
-
                 case 'POST':
                     if (empty($uri->getParam('question'))) {
                         Output::error('A pergunta não pode estar vazia');
@@ -42,9 +40,7 @@ class Questions
 
                     $id = Crud::insert(Question::class, 'id', $uri->getParametros());
 
-                    Output::success(['id' => $id], 201);
-
-                    break;
+                    Output::success(['id' => $id], Output::POST_SUCCESS);
 
                 case 'PUT':
                 case 'PATCH':
@@ -65,9 +61,7 @@ class Questions
                     $question->question = $questionTxt;
                     Crud::update(Question::class, 'id', $question);
 
-                    Output::success([], 204);
-
-                    break;
+                    Output::success([], Output::PUT_SUCCESS);
 
                 case 'DELETE':
                     if (empty($id)) {
@@ -76,9 +70,9 @@ class Questions
 
                     Crud::delete(Question::class, 'id', $id);
 
-                    Output::success([], 204);
-                    break;
+                    Output::success([], Output::DELETE_SUCCESS);
             }
+            
         } catch (AncientException $e) {
             Output::error($e->getMessage());
         }
