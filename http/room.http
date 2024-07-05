@@ -15,7 +15,7 @@ Content-Type: application/json
 AncientAuth: {{auth}}
 
 {
-  "name": "alini"
+  "name": "daniel"
 }
 
 ### Sala

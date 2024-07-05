@@ -5,7 +5,6 @@
         }
     },
     "require": {
-        "szagot/conn": "dev-master",
         "szagot/config": "dev-master",
         "szagot/helper": "dev-main"
     }
