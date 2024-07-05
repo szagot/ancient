@@ -14,21 +14,48 @@
 	✅ Conexão de sala (via code)
 	✅ Controle de pessoas na sala (qdo todos saem da sala, ela é excluída)
 	✅ Inicio quando tiver o suficiente
+	    ➡️ Quando todos dos jogadores clicar em "iniciar" (lista de visualização = lista de gamers),
+	       muda o estado da sala para fase 1, limpa a lista de visualização e seleciona o
+	       personagem secreto da rodada e a jogador fora da rodada. Salva a vez de quem é agora.
 
-🔁 Personagem
-	🔁 Ativa o terminal de cada pessoa com seu personagem secreto, ou o aviso de fora da rodada
+🔳 Personagem
+	🔳 Ativa o terminal de cada pessoa com seu personagem secreto, ou o aviso de fora da rodada
+	    ⬅️ Jogador fica verificando o estado da sala em relação a seu personagem
+	    ➡️ Devolve ao jogador:
+	        - O personagem secreto ou se...
+	        - Está fora da rodada!
 	🔳 Aguarda o aviso de que todos viram
+	    ➡️ Quando todos tiverem visto o seu personagem (lista de visualização = lista de gamers) muda para fase 2
+	       e limpa a lista de visualização.
 
 🔳 Perguntas
 	🔳 Ativa o terminal da pessoa que irá fazer a próxima pergunta.
+	    ⬅️ Jogador fica verificando o estado da sala em relação a seu personagem (devolvendo fase e ação,
+	       ou simplesmente um "wait")
+	    ➡️ Devolve ao jogador:
+	        - A pergunta e para quem ela deve ser feita, se for a vez desse jogador
+	        - status: "wait" se não for a vez dele
 	🔳 Aguarda o sinal de que já perguntou, ativando o próximo
+	    ➡️ Quando todos tiverem feito a pergunta (lista de visualização = lista de gamers & rodada final), muda
+	       para fase 3 e limpa a lista de visualização
 
 🔳 Votação
 	🔳 Ativa o terminal de cada pessoa com a votação (menos quem está fora)
+	    ⬅️ Jogador fica verificando o estado da sala em relação a seu personagem
 	🔳 Quem está fora, recebe a lista de personagens (com uma dica) para tentar adivinhar quem é.
+	    ➡️ Devolve ao jogador:
+	        - A lista de jogadores para votação (menos ele próprio) se o jogador estiver na rodada
+	        - Uma lista de personagens para escolher quem é o secreto, se o jogador estiver FORA na rodada
 	🔳 Aguarda que todos tenham respondido
+	    ➡️ Quando todos tiverem feito a votação (lista de visualização = lista de gamers) muda para fase 3
+	       e limpa a lista de visualização
 
 🔳 Final
 	🔳 Todos recebem o aviso de quem estava fora da rodada e a pontuação.
+	    ⬅️ Jogador fica verificando o estado da sala em relação a seu personagem
+	    ➡️ Devolve ao jogador o personagem secreto, quem estava fora da rodada e a pontuação atual.
 	🔳 Aguarda o aviso de que todos querem novo turno.
+	    ⬅️ Jogador envia aviso de reinício ou sair da sala.
 	🔳 Se alguém sair da jogada, e não tiver o mínimo (3) não deixa iniciar novo turno, até ter pelo menos 3.
+        ➡️ Quando todos clicarem em iniciar (lista de visualização = lista de gamers) e tiver o mínimo de jogadores,
+           inicia o jogo. Se não tiver o número mínimo, alerta o jogador e volta para fase 0.

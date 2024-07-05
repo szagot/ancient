@@ -19,7 +19,7 @@ class Characters
                 case 'GET':
                     if (empty($id)) {
                         // GET All
-                        Output::success(Crud::getAll(Character::class));
+                        Output::success(Crud::getAll(Character::class,0,0,'name'));
                     }
 
                     /** @var Character $character */

@@ -90,7 +90,7 @@ class Game
 
         $qtGamers = count($room->getGamers());
         $qtQuestions = $qtGamers * (($qtGamers > 3) ? 2 : 3);
-        self::$questions = Crud::getAll(Question::class, 0, $qtQuestions, true);
+        self::$questions = Crud::getAll(Question::class, 0, $qtQuestions, 'RAND()');
 
         // Se a quantidade não for mínima, zera as perguntas
         if (count(self::$questions) < $qtQuestions) {

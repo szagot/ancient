@@ -2,20 +2,20 @@
 
 ### Pega todas as perguntas
 GET http://localhost:8888/questions
-Authorization: Basic {{auth}}
+AncientAuth: {{auth}}
 
 ### Pega uma pergunta específica
 GET http://localhost:8888/questions/1
-Authorization: Basic {{auth}}
+AncientAuth: {{auth}}
 
 ### Pega os personagens relacionados àquela pergunta
 GET http://localhost:8888/questions/1/characters
-Authorization: Basic {{auth}}
+AncientAuth: {{auth}}
 
 ### Cria uma pergunta
 POST http://localhost:8888/questions
 Content-Type: application/json
-Authorization: Basic {{auth}}
+AncientAuth: {{auth}}
 
 {
   "question": "Foi um profeta?"
@@ -24,7 +24,7 @@ Authorization: Basic {{auth}}
 ### Atualiza uma pergunta
 PUT http://localhost:8888/questions/2
 Content-Type: application/json
-Authorization: Basic {{auth}}
+AncientAuth: {{auth}}
 
 {
   "question": "Foi um profeta ou profetisa?"
@@ -32,4 +32,4 @@ Authorization: Basic {{auth}}
 
 ### Apaga uma pergunta
 DELETE http://localhost:8888/questions/3
-Authorization: Basic {{auth}}
+AncientAuth: {{auth}}

@@ -36,17 +36,17 @@ class Crud
      * @param string $class Classe relacionada a pesquisa. Ela deve possuir uma const TABLE com o nome da tabela.
      * @param int    $offset
      * @param int    $limit
-     * @param bool   $shuffled
+     * @param string $orderBy
      *
      * @return array
      * @throws AncientException
      */
-    static public function getAll(string $class, int $offset = 0, int $limit = 0, bool $shuffled = false): array
+    static public function getAll(string $class, int $offset = 0, int $limit = 0, string $orderBy = ''): array
     {
         $table = self::getTable($class);
         $filter = '';
-        if($shuffled){
-            $filter .= ' ORDER BY RAND()';
+        if($orderBy){
+            $filter .= " ORDER BY $orderBy";
         }
         if ($limit > 0) {
             $filter .= " LIMIT {$offset}, {$limit}";

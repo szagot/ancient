@@ -4,14 +4,14 @@
 ### Pega os dados do jogador.
 GET http://localhost:8888/game/3195DB/3
 Content-Type: application/json
-Authorization: Basic {{auth}}
+AncientAuth: {{auth}}
 
 ### Permite o início do jogo
 GET http://localhost:8888/game/3195DB/3/allow
 Content-Type: application/json
-Authorization: Basic {{auth}}
+AncientAuth: {{auth}}
 
 ### Avança a fase
 POST http://localhost:8888/game/3195DB/3
 Content-Type: application/json
-Authorization: Basic {{auth}}
+AncientAuth: {{auth}}

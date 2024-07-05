@@ -3,17 +3,20 @@
 namespace Ancient\Service;
 
 use Ancient\Config\Output;
+use Ancient\Control\Crud;
+use Ancient\Exception\AncientException;
+use Ancient\Models\Config;
+use JetBrains\PhpStorm\NoReturn;
 use Sz\Config\Uri;
 
 class Control
 {
+    #[NoReturn]
     static public function run(Uri $uri): void
     {
         self::cors();
-        if (!self::checkBasicAuth()) {
-            header('HTTP/1.1 401 Unauthorized');
-            header('WWW-Authenticate: Basic realm="Area Restrita"');
-            exit('Acesso não autorizado.');
+        if (!self::checkBasicAuth($uri)) {
+            Output::error('Não autorizado', Output::ERROR_UNAUTHORIZED);
         }
 
         switch (strtolower($uri->pagina)) {
@@ -64,20 +67,20 @@ class Control
     }
 
     // Função para verificar as credenciais de autenticação básica
-    private static function checkBasicAuth(): bool
+    private static function checkBasicAuth(Uri $uri): bool
     {
-        if (!isset($_SERVER['PHP_AUTH_USER']) || !isset($_SERVER['PHP_AUTH_PW'])) {
+        $auth = $uri->getHeader('AncientAuth');
+        if (empty($auth)) {
             return false;
         }
 
-        $expectedUser = getenv('ANCIENT_USER');
-        $expectedPass = getenv('ANCIENT_PASS');
-
-        // Verifica se as credenciais correspondem
-        if ($_SERVER['PHP_AUTH_USER'] !== $expectedUser || $_SERVER['PHP_AUTH_PW'] !== $expectedPass) {
+        try {
+            /** @var Config $apiPass */
+            $apiPass = Crud::get(Config::class, 'field', 'api');
+        } catch (AncientException) {
             return false;
         }
 
-        return true;
+        return $apiPass?->value == $auth;
     }
 }
