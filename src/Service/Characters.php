@@ -19,11 +19,11 @@ class Characters
                 case 'GET':
                     if (empty($id)) {
                         // GET All
-                        Output::success(Crud::getAll(Character::class,0,0,'name'));
+                        Output::success(Crud::getAll(Character::class, 0, 0, 'name'));
                     }
 
                     /** @var Character $character */
-                    $character = Crud::get(Character::class, 'id', $id);
+                    $character = Crud::get(Character::class, $id);
                     if (!$character) {
                         Output::error('Personagem não encontrado.', 404);
                     }
@@ -48,7 +48,7 @@ class Characters
                         Output::success($character[0]);
                     }
 
-                    $id = Crud::insert(Character::class, 'id', $uri->getParametros());
+                    $id = Crud::insert(Character::class, $uri->getParametros());
 
                     Output::success(['id' => $id], Output::POST_SUCCESS);
 
@@ -63,13 +63,13 @@ class Characters
                         Output::error('Informe o nome do personagem.');
                     }
 
-                    $character = Crud::get(Character::class, 'id', $id);
+                    $character = Crud::get(Character::class, $id);
                     if (!$character) {
                         Output::error('Personagem não encontrado.');
                     }
 
                     $character->name = $name;
-                    Crud::update(Character::class, 'id', $character);
+                    Crud::update(Character::class, $character);
 
                     Output::success([], Output::PUT_SUCCESS);
 

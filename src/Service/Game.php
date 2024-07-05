@@ -24,7 +24,7 @@ class Game
             }
 
             /** @var ModelRoom $room */
-            $room = Crud::get(ModelRoom::class, 'code', $code);
+            $room = Crud::get(ModelRoom::class, $code);
             if ($room?->code != $code) {
                 Output::error('Código da sala inválido', Output::ERROR_NOT_FOUND);
             }
@@ -36,7 +36,7 @@ class Game
             }
 
             /** @var Gamer $gamer */
-            $gamer = Crud::get(Gamer::class, 'id', $gamerId);
+            $gamer = Crud::get(Gamer::class, $gamerId);
             if (!$gamer || $gamer->room_code != $room->code) {
                 Output::error('Jogador não localizado na sala', Output::ERROR_NOT_FOUND);
             }
@@ -116,7 +116,7 @@ class Game
                 // Seleciona oo personagem secreto e o jogador fora da rodada
                 $room->setSecrets();
                 $room->fase++;
-                Crud::update(ModelRoom::class, 'code', $room);
+                Crud::update(ModelRoom::class, $room);
 
                 // TODO: repensar isso, porque o jogo precisa saber quando TODOS os jogadores avançaram a fase
                 // criar tabela de views
@@ -130,7 +130,7 @@ class Game
             case 1:
                 // Pega as perguntas a serem feitas
                 $room->fase++;
-                Crud::update(ModelRoom::class, 'code', $room);
+                Crud::update(ModelRoom::class, $room);
 
                 // TODO: repensar isso, porque cada jogador receberá uma pergunta para fazer para o próximo
 
@@ -142,7 +142,7 @@ class Game
             default:
                 // TODO: remover, é apenas para teste
                 $room->fase = 0;
-                Crud::update(ModelRoom::class, 'code', $room);
+                Crud::update(ModelRoom::class, $room);
                 return [
                     'room' => $room,
                 ];

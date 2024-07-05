@@ -20,7 +20,7 @@ class Room
             }
 
             /** @var ModelRoom $room */
-            $room = Crud::get(ModelRoom::class, 'code', $code);
+            $room = Crud::get(ModelRoom::class, $code);
             if ($room?->code != $code && $uri->getMethod() != 'POST') {
                 Output::error('Código da sala inválido', Output::ERROR_NOT_FOUND);
             }
@@ -60,7 +60,7 @@ class Room
                             }
                         }
 
-                        $id = Crud::insert(Gamer::class, 'id', Gamer::newGamer($name, $room->code));
+                        $id = Crud::insert(Gamer::class, Gamer::newGamer($name, $room->code));
                         Output::success(
                             [
                                 'room_code' => $room->code,
@@ -73,8 +73,8 @@ class Room
                     // Cria uma sala nova
                     $room = ModelRoom::newRoom();
                     $gamer = Gamer::newGamer($name, $room->code);
-                    Crud::insert(ModelRoom::class, '', $room);
-                    $id = Crud::insert(Gamer::class, 'id', $gamer);
+                    Crud::insert(ModelRoom::class, $room);
+                    $id = Crud::insert(Gamer::class, $gamer);
 
                     Output::success(
                         [

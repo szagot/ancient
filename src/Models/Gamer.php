@@ -2,14 +2,16 @@
 
 namespace Ancient\Models;
 
-use Szagot\Helper\Conn\aModel;
+use Szagot\Helper\Attributes\PrimaryKey;
+use Szagot\Helper\Attributes\Table;
+use Szagot\Helper\Conn\Model\aModel;
 use Szagot\Helper\Conn\ConnException;
 use Szagot\Helper\Conn\Crud;
 
+#[Table(name: 'gamers')]
 class Gamer extends aModel
 {
-    const TABLE = 'gamers';
-
+    #[PrimaryKey]
     public int     $id;
     public ?string $name;
     public ?int    $points   = 0;
@@ -21,7 +23,7 @@ class Gamer extends aModel
      */
     public function getRoom(): ?Room
     {
-        return Crud::get(Room::class, 'code', $this->room_code);
+        return Crud::get(Room::class, $this->room_code);
     }
 
     public static function newGamer(string $name, string $roomCode): Gamer

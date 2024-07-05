@@ -2,15 +2,17 @@
 
 namespace Ancient\Models;
 
-use Szagot\Helper\Conn\aModel;
+use Szagot\Helper\Attributes\PrimaryKey;
+use Szagot\Helper\Attributes\Table;
+use Szagot\Helper\Conn\Model\aModel;
 use Szagot\Helper\Conn\Query;
 
+#[Table(name: 'characters')]
 class Character extends aModel
-    {
-        const TABLE = 'characters';
-
-        public int     $id;
-        public ?string $name;
+{
+    #[PrimaryKey]
+    public int     $id;
+    public ?string $name;
 
     public function getQuestions(): array
     {

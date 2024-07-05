@@ -4,16 +4,17 @@ namespace Ancient\Models;
 
 use DateTime;
 use Exception;
-use Szagot\Helper\Conn\aModel;
+use Szagot\Helper\Attributes\PrimaryKey;
+use Szagot\Helper\Attributes\Table;
+use Szagot\Helper\Conn\Model\aModel;
 use Szagot\Helper\Conn\ConnException;
 use Szagot\Helper\Conn\Crud;
 use Szagot\Helper\Conn\Query;
 
+#[Table(name: 'rooms')]
 class Room extends aModel
 {
-    const TABLE = 'rooms';
-
-    // Código hexadecimal de 6 dígitos
+    #[PrimaryKey(autoIncrement: false)]
     public string  $code;
     public ?int    $fase                = 0;
     public ?int    $secret_character_id = null;
@@ -26,7 +27,7 @@ class Room extends aModel
      */
     public function getSecretCharacter(): ?Character
     {
-        return Crud::get(Character::class, 'id', $this->secret_character_id);
+        return Crud::get(Character::class, $this->secret_character_id);
     }
 
     /**
@@ -34,7 +35,7 @@ class Room extends aModel
      */
     public function getOutOfTheLoopGamer(): ?Gamer
     {
-        return Crud::get(Gamer::class, 'id', $this->out_gamer_id);
+        return Crud::get(Gamer::class, $this->out_gamer_id);
     }
 
     public function getCreatedAt(): ?DateTime
@@ -69,13 +70,13 @@ class Room extends aModel
             null,
             Character::class
         )[0] ?? null;
-        if($secret){
+        if ($secret) {
             $this->secret_character_id = $secret->id;
         }
 
         $gamers = $this->getGamers();
         $outOfLoop = $gamers[rand(0, count($gamers) - 1)];
-        if($outOfLoop){
+        if ($outOfLoop) {
             $this->out_gamer_id = $outOfLoop->id;
         }
     }

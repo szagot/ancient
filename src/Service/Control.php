@@ -76,7 +76,7 @@ class Control
 
         try {
             /** @var Config $apiPass */
-            $apiPass = Crud::get(Config::class, 'field', 'api');
+            $apiPass = Crud::get(Config::class, 'api');
         } catch (ConnException) {
             return false;
         }

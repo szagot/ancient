@@ -23,7 +23,7 @@ class Questions
                     }
 
                     /** @var Question $question */
-                    $question = Crud::get(Question::class, 'id', $id);
+                    $question = Crud::get(Question::class, $id);
 
                     // GET /{id}/characters
                     if ($uri->detalhe == 'characters') {
@@ -38,7 +38,7 @@ class Questions
                         Output::error('A pergunta não pode estar vazia');
                     }
 
-                    $id = Crud::insert(Question::class, 'id', $uri->getParametros());
+                    $id = Crud::insert(Question::class, $uri->getParametros());
 
                     Output::success(['id' => $id], Output::POST_SUCCESS);
 
@@ -53,13 +53,13 @@ class Questions
                         Output::error('A pergunta não pode estar vazia');
                     }
 
-                    $question = Crud::get(Question::class, 'id', $id);
+                    $question = Crud::get(Question::class, $id);
                     if (!$question) {
                         Output::error('Pergunta não encontrado.');
                     }
 
                     $question->question = $questionTxt;
-                    Crud::update(Question::class, 'id', $question);
+                    Crud::update(Question::class, $question);
 
                     Output::success([], Output::PUT_SUCCESS);
 

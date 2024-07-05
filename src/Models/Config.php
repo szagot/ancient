@@ -2,11 +2,14 @@
 
 namespace Ancient\Models;
 
-use Szagot\Helper\Conn\aModel;
+use Szagot\Helper\Attributes\PrimaryKey;
+use Szagot\Helper\Attributes\Table;
+use Szagot\Helper\Conn\Model\aModel;
 
+#[Table(name: 'config')]
 class Config extends aModel
 {
-    const TABLE = 'config';
+    #[PrimaryKey(autoIncrement: false)]
     public string  $field;
     public ?string $value;
 }

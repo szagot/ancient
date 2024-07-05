@@ -15,7 +15,7 @@ Content-Type: application/json
 AncientAuth: {{auth}}
 
 {
-  "name": "daniel"
+  "name": "filipe"
 }
 
 ### Sala
@@ -39,10 +39,10 @@ Content-Type: application/json
 AncientAuth: {{auth}}
 
 ### Deixando a Sala
-DELETE http://localhost:8888/room/D6B180
+DELETE http://localhost:8888/room/DB8E19
 Content-Type: application/json
 AncientAuth: {{auth}}
 
 {
-  "id": 2
+  "id": 6
 }
