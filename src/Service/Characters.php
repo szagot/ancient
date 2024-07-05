@@ -3,10 +3,10 @@
 namespace Ancient\Service;
 
 use Ancient\Config\Output;
-use Ancient\Control\Crud;
-use Ancient\Exception\AncientException;
 use Ancient\Models\Character;
 use Sz\Config\Uri;
+use Szagot\Conn\ConnException;
+use Szagot\Conn\Crud;
 
 class Characters
 {
@@ -82,7 +82,7 @@ class Characters
 
                     Output::success([], Output::DELETE_SUCCESS);
             }
-        } catch (AncientException $e) {
+        } catch (ConnException $e) {
             Output::error($e->getMessage());
         }
     }

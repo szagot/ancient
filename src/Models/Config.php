@@ -2,7 +2,9 @@
 
 namespace Ancient\Models;
 
-class Config
+use Szagot\Conn\aModel;
+
+class Config extends aModel
 {
     const TABLE = 'config';
     public string  $field;

@@ -2,10 +2,11 @@
 
 namespace Ancient\Models;
 
-use Ancient\Control\Crud;
-use Ancient\Exception\AncientException;
+use Szagot\Conn\aModel;
+use Szagot\Conn\ConnException;
+use Szagot\Conn\Crud;
 
-class Gamer
+class Gamer extends aModel
 {
     const TABLE = 'gamers';
 
@@ -16,7 +17,7 @@ class Gamer
     public ?bool   $finished = false;
 
     /**
-     * @throws AncientException
+     * @throws ConnException
      */
     public function getRoom(): ?Room
     {

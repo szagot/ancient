@@ -3,12 +3,12 @@
 namespace Ancient\Service;
 
 use Ancient\Config\Output;
-use Ancient\Control\Crud;
-use Ancient\Exception\AncientException;
 use Ancient\Models\Gamer;
 use Ancient\Models\Question;
 use Ancient\Models\Room as ModelRoom;
 use Sz\Config\Uri;
+use Szagot\Conn\ConnException;
+use Szagot\Conn\Crud;
 
 class Game
 {
@@ -57,11 +57,10 @@ class Game
                     }
 
                 case 'POST':
-                    ;
                     Output::success(self::nextFase($room), Output::POST_SUCCESS);
             }
 
-        } catch (AncientException $e) {
+        } catch (ConnException $e) {
             Output::error($e->getMessage());
         }
     }
@@ -72,7 +71,7 @@ class Game
      * @param ModelRoom $room
      *
      * @return bool
-     * @throws AncientException
+     * @throws ConnException
      */
     private static function allowGame(ModelRoom $room): bool
     {
@@ -80,7 +79,7 @@ class Game
     }
 
     /**
-     * @throws AncientException
+     * @throws ConnException
      */
     private static function getQuestions(ModelRoom $room, bool $force = false): array
     {
@@ -103,7 +102,7 @@ class Game
     /**
      * Controle de fases
      *
-     * @throws AncientException
+     * @throws ConnException
      */
     private static function nextFase(ModelRoom $room): array
     {
@@ -120,7 +119,7 @@ class Game
                 Crud::update(ModelRoom::class, 'code', $room);
 
                 // TODO: repensar isso, porque o jogo precisa saber quando TODOS os jogadores avançaram a fase
-                // criar tabela de estado do tabuleiro
+                // criar tabela de views
 
                 return [
                     'room'      => $room,

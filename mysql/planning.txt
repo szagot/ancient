@@ -13,10 +13,12 @@
 	✅ Criação de sala (code)
 	✅ Conexão de sala (via code)
 	✅ Controle de pessoas na sala (qdo todos saem da sala, ela é excluída)
-	✅ Inicio quando tiver o suficiente
-	    ➡️ Quando todos dos jogadores clicar em "iniciar" (lista de visualização = lista de gamers),
+	🔳 Inicio quando tiver o suficiente
+	    ➡️ Quando todos dos jogadores clicarem em "iniciar" (lista de visualização = lista de gamers),
 	       muda o estado da sala para fase 1, limpa a lista de visualização e seleciona o
 	       personagem secreto da rodada e a jogador fora da rodada. Salva a vez de quem é agora.
+
+	       Obs: Não deve permitir iniciar se não tiver uma quantidade de jogadores suficientes.
 
 🔳 Personagem
 	🔳 Ativa o terminal de cada pessoa com seu personagem secreto, ou o aviso de fora da rodada

@@ -3,11 +3,11 @@
 namespace Ancient\Service;
 
 use Ancient\Config\Output;
-use Ancient\Control\Crud;
-use Ancient\Exception\AncientException;
 use Ancient\Models\Config;
 use JetBrains\PhpStorm\NoReturn;
 use Sz\Config\Uri;
+use Szagot\Conn\ConnException;
+use Szagot\Conn\Crud;
 
 class Control
 {
@@ -77,7 +77,7 @@ class Control
         try {
             /** @var Config $apiPass */
             $apiPass = Crud::get(Config::class, 'field', 'api');
-        } catch (AncientException) {
+        } catch (ConnException) {
             return false;
         }
 

@@ -1,6 +1,7 @@
 <?php
 
-use Sz\Conn\Query;
+use Szagot\Conn\Connection;
+use Szagot\Conn\Query;
 
 define('BASEDIR', __DIR__ . DIRECTORY_SEPARATOR);
 define('ROOT', 'ancient/backend/');
@@ -17,7 +18,7 @@ ini_set('display_errors', $debug ? 'On' : 'Off');
 error_reporting($debug ? E_ALL : 0);
 
 Query::setConn(
-    new Sz\Conn\Connection(
+    new Connection(
         'ancient',
         'localhost',
         'root',

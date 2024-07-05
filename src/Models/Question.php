@@ -2,9 +2,10 @@
 
 namespace Ancient\Models;
 
-use Sz\Conn\Query;
+use Szagot\Conn\aModel;
+use Szagot\Conn\Query;
 
-class Question
+class Question extends aModel
 {
     const TABLE = 'questions';
 

@@ -2,13 +2,14 @@
 
 namespace Ancient\Models;
 
-use Ancient\Control\Crud;
-use Ancient\Exception\AncientException;
 use DateTime;
 use Exception;
-use Sz\Conn\Query;
+use Szagot\Conn\aModel;
+use Szagot\Conn\ConnException;
+use Szagot\Conn\Crud;
+use Szagot\Conn\Query;
 
-class Room
+class Room extends aModel
 {
     const TABLE = 'rooms';
 
@@ -21,7 +22,7 @@ class Room
     public ?string $created_at;
 
     /**
-     * @throws AncientException
+     * @throws ConnException
      */
     public function getSecretCharacter(): ?Character
     {
@@ -29,7 +30,7 @@ class Room
     }
 
     /**
-     * @throws AncientException
+     * @throws ConnException
      */
     public function getOutOfTheLoopGamer(): ?Gamer
     {

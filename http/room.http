@@ -10,7 +10,7 @@ AncientAuth: {{auth}}
 }
 
 ### Adicionando Jogadores
-POST http://localhost:8888/room/3195DB
+POST http://localhost:8888/room/D6B180
 Content-Type: application/json
 AncientAuth: {{auth}}
 
@@ -19,27 +19,27 @@ AncientAuth: {{auth}}
 }
 
 ### Sala
-GET http://localhost:8888/room/3195DB
+GET http://localhost:8888/room/D6B180
 Content-Type: application/json
 AncientAuth: {{auth}}
 
 ### Jogadores da Sala
-GET http://localhost:8888/room/3195DB/gamers
+GET http://localhost:8888/room/D6B180/gamers
 Content-Type: application/json
 AncientAuth: {{auth}}
 
 ### Jogador Fora da Rodada
-GET http://localhost:8888/room/3195DB/outOfLoop
+GET http://localhost:8888/room/D6B180/outOfLoop
 Content-Type: application/json
 AncientAuth: {{auth}}
 
 ### Personagem Secreto
-GET http://localhost:8888/room/3195DB/secret
+GET http://localhost:8888/room/D6B180/secret
 Content-Type: application/json
 AncientAuth: {{auth}}
 
 ### Deixando a Sala
-DELETE http://localhost:8888/room/3195DB
+DELETE http://localhost:8888/room/D6B180
 Content-Type: application/json
 AncientAuth: {{auth}}
 

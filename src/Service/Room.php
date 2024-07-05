@@ -3,11 +3,11 @@
 namespace Ancient\Service;
 
 use Ancient\Config\Output;
-use Ancient\Control\Crud;
-use Ancient\Exception\AncientException;
 use Ancient\Models\Gamer;
 use Ancient\Models\Room as ModelRoom;
 use Sz\Config\Uri;
+use Szagot\Conn\ConnException;
+use Szagot\Conn\Crud;
 
 class Room
 {
@@ -100,7 +100,7 @@ class Room
 
                     Output::success(null, Output::DELETE_SUCCESS);
             }
-        } catch (AncientException $e) {
+        } catch (ConnException $e) {
             Output::error($e->getMessage());
         }
     }
