@@ -2,7 +2,7 @@
 
 namespace Ancient\Models;
 
-use Szagot\Conn\aModel;
+use Szagot\Helper\Conn\aModel;
 
 class Config extends aModel
 {

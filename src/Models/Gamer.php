@@ -2,9 +2,9 @@
 
 namespace Ancient\Models;
 
-use Szagot\Conn\aModel;
-use Szagot\Conn\ConnException;
-use Szagot\Conn\Crud;
+use Szagot\Helper\Conn\aModel;
+use Szagot\Helper\Conn\ConnException;
+use Szagot\Helper\Conn\Crud;
 
 class Gamer extends aModel
 {

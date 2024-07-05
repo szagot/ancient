@@ -5,8 +5,8 @@ namespace Ancient\Service;
 use Ancient\Config\Output;
 use Ancient\Models\Character;
 use Sz\Config\Uri;
-use Szagot\Conn\ConnException;
-use Szagot\Conn\Crud;
+use Szagot\Helper\Conn\ConnException;
+use Szagot\Helper\Conn\Crud;
 
 class Characters
 {

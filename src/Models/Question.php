@@ -2,8 +2,8 @@
 
 namespace Ancient\Models;
 
-use Szagot\Conn\aModel;
-use Szagot\Conn\Query;
+use Szagot\Helper\Conn\aModel;
+use Szagot\Helper\Conn\Query;
 
 class Question extends aModel
 {

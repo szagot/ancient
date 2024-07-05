@@ -1,7 +1,7 @@
 <?php
 
-use Szagot\Conn\Connection;
-use Szagot\Conn\Query;
+use Szagot\Helper\Conn\Connection;
+use Szagot\Helper\Conn\Query;
 
 define('BASEDIR', __DIR__ . DIRECTORY_SEPARATOR);
 define('ROOT', 'ancient/backend/');
