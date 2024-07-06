@@ -5,39 +5,40 @@ namespace Ancient\Service;
 use Ancient\Config\Output;
 use Ancient\Models\Config;
 use JetBrains\PhpStorm\NoReturn;
-use Sz\Config\Uri;
 use Szagot\Helper\Conn\ConnException;
 use Szagot\Helper\Conn\Crud;
+use Szagot\Helper\Server\Uri;
 
 class Control
 {
     #[NoReturn]
-    static public function run(Uri $uri): void
+    static public function run(): void
     {
         self::cors();
-        if (!self::checkBasicAuth($uri)) {
+
+        if (!self::checkBasicAuth()) {
             Output::error('Não autorizado', Output::ERROR_UNAUTHORIZED);
         }
 
-        switch (strtolower($uri->pagina)) {
+        switch (strtolower(Uri::newInstance()->getUri(0))) {
             // Perguntas
             case 'questions':
-                Questions::run($uri);
+                Questions::run();
                 break;
 
             // Personagens
             case 'characters':
-                Characters::run($uri);
+                Characters::run();
                 break;
 
             // Sala e Jogadores
             case 'room':
-                Room::run($uri);
+                Room::run();
                 break;
 
             // Jogo
             case 'game':
-                Game::run($uri);
+                Game::run();
                 break;
         }
 
@@ -67,9 +68,9 @@ class Control
     }
 
     // Função para verificar as credenciais de autenticação básica
-    private static function checkBasicAuth(Uri $uri): bool
+    private static function checkBasicAuth(): bool
     {
-        $auth = $uri->getHeader('AncientAuth');
+        $auth = Uri::newInstance()->getHeader('AncientAuth');
         if (empty($auth)) {
             return false;
         }

@@ -6,19 +6,20 @@ use Ancient\Config\Output;
 use Ancient\Models\Gamer;
 use Ancient\Models\Question;
 use Ancient\Models\Room as ModelRoom;
-use Sz\Config\Uri;
 use Szagot\Helper\Conn\ConnException;
 use Szagot\Helper\Conn\Crud;
+use Szagot\Helper\Server\Uri;
 
 class Game
 {
     private static array $questions = [];
 
-    public static function run(Uri $uri): void
+    public static function run(): void
     {
+        $uri = Uri::newInstance();
         try {
             // Código da sala
-            $code = $uri->opcao;
+            $code = $uri->getUri(1);
             if (empty($code)) {
                 Output::error('Informe o código da sua sala');
             }
@@ -30,7 +31,7 @@ class Game
             }
 
             // ID do Jogador
-            $gamerId = $uri->detalhe;
+            $gamerId = $uri->getUri(2);
             if (empty($gamerId)) {
                 Output::error('Informe o ID do Jogador');
             }

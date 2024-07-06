@@ -5,16 +5,17 @@ namespace Ancient\Service;
 use Ancient\Config\Output;
 use Ancient\Models\Gamer;
 use Ancient\Models\Room as ModelRoom;
-use Sz\Config\Uri;
 use Szagot\Helper\Conn\ConnException;
 use Szagot\Helper\Conn\Crud;
+use Szagot\Helper\Server\Uri;
 
 class Room
 {
-    public static function run(Uri $uri): void
+    public static function run(): void
     {
+        $uri = Uri::newInstance();
         try {
-            $code = $uri->opcao;
+            $code = $uri->getUri(1);
             if (empty($code) && $uri->getMethod() != 'POST') {
                 Output::error('Informe o código da sua sala');
             }
@@ -27,7 +28,7 @@ class Room
 
             switch ($uri->getMethod()) {
                 case 'GET':
-                    switch ($uri->detalhe) {
+                    switch ($uri->getUri(2)) {
                         case 'gamers':
                             Output::success($room->getGamers());
                         case 'outOfLoop':
@@ -39,7 +40,7 @@ class Room
                     }
 
                 case 'POST':
-                    $name = strtolower($uri->getParam('name'));
+                    $name = strtolower($uri->getParameter('name'));
                     if (empty($name)) {
                         Output::error('Informe o seu nome de jogador');
                     }
@@ -85,17 +86,17 @@ class Room
                     );
 
                 case 'DELETE':
-                    $id = $uri->getParam('id');
+                    $id = $uri->getParameter('id');
                     if (!$id) {
                         Output::error('Para deixar a sala você precisa informar seu ID');
                     }
 
-                    Crud::delete(Gamer::class, 'id', $id);
+                    Crud::delete(Gamer::class, $id);
 
                     // Se após deletar um jogador, nenhum ficou na sala, apaga a sala
                     $gamers = $room->getGamers();
                     if (!$gamers) {
-                        Crud::delete(ModelRoom::class, 'code', $code);
+                        Crud::delete(ModelRoom::class, $code);
                     }
 
                     Output::success(null, Output::DELETE_SUCCESS);

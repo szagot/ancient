@@ -4,15 +4,16 @@ namespace Ancient\Service;
 
 use Ancient\Config\Output;
 use Ancient\Models\Character;
-use Sz\Config\Uri;
 use Szagot\Helper\Conn\ConnException;
 use Szagot\Helper\Conn\Crud;
+use Szagot\Helper\Server\Uri;
 
 class Characters
 {
-    public static function run(Uri $uri): void
+    public static function run(): void
     {
-        $id = (int)$uri->opcao;
+        $uri = Uri::newInstance();
+        $id = (int)$uri->getUri(1);
 
         try {
             switch ($uri->getMethod()) {
@@ -29,7 +30,7 @@ class Characters
                     }
 
                     // GET /{id}/questions
-                    if ($uri->detalhe == 'questions') {
+                    if ($uri->getUri(2) == 'questions') {
                         Output::success($character->getQuestions());
                     }
 
@@ -37,7 +38,7 @@ class Characters
                     Output::success($character);
 
                 case 'POST':
-                    $name = $uri->getParam('name');
+                    $name = $uri->getParameter('name');
                     if (empty($name)) {
                         Output::error('Informe o nome do personagem');
                     }
@@ -48,7 +49,9 @@ class Characters
                         Output::success($character[0]);
                     }
 
-                    $id = Crud::insert(Character::class, $uri->getParametros());
+                    $character = new Character();
+                    $character->name = $name;
+                    $id = Crud::insert(Character::class, $character);
 
                     Output::success(['id' => $id], Output::POST_SUCCESS);
 
@@ -58,7 +61,7 @@ class Characters
                         Output::error('Informe o ID para atualização.');
                     }
 
-                    $name = $uri->getParam('name');
+                    $name = $uri->getParameter('name');
                     if (empty($name)) {
                         Output::error('Informe o nome do personagem.');
                     }
@@ -78,7 +81,7 @@ class Characters
                         Output::error('Informe o ID para deletar.');
                     }
 
-                    Crud::delete(Character::class, 'id', $id);
+                    Crud::delete(Character::class, $id);
 
                     Output::success([], Output::DELETE_SUCCESS);
             }

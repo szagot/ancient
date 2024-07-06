@@ -4,15 +4,16 @@ namespace Ancient\Service;
 
 use Ancient\Config\Output;
 use Ancient\Models\Question;
-use Sz\Config\Uri;
 use Szagot\Helper\Conn\ConnException;
 use Szagot\Helper\Conn\Crud;
+use Szagot\Helper\Server\Uri;
 
 class Questions
 {
-    public static function run(Uri $uri): void
+    public static function run(): void
     {
-        $id = (int)$uri->opcao;
+        $uri = Uri::newInstance();
+        $id = (int)$uri->getUri(1);
 
         try {
             switch ($uri->getMethod()) {
@@ -24,9 +25,12 @@ class Questions
 
                     /** @var Question $question */
                     $question = Crud::get(Question::class, $id);
+                    if (!$question) {
+                        Output::error('Pergunta não encontrada.', 404);
+                    }
 
                     // GET /{id}/characters
-                    if ($uri->detalhe == 'characters') {
+                    if ($uri->getUri(2) == 'characters') {
                         Output::success($question->getCharacters());
                     }
 
@@ -34,11 +38,14 @@ class Questions
                     Output::success($question);
 
                 case 'POST':
-                    if (empty($uri->getParam('question'))) {
+                    $questionTxt = $uri->getParameter('question');
+                    if (empty($questionTxt)) {
                         Output::error('A pergunta não pode estar vazia');
                     }
 
-                    $id = Crud::insert(Question::class, $uri->getParametros());
+                    $question = new Question();
+                    $question->question = $questionTxt;
+                    $id = Crud::insert(Question::class, $question);
 
                     Output::success(['id' => $id], Output::POST_SUCCESS);
 
@@ -48,7 +55,7 @@ class Questions
                         Output::error('Informe o ID para atualização.');
                     }
 
-                    $questionTxt = $uri->getParam('question');
+                    $questionTxt = $uri->getParameter('question');
                     if (empty($questionTxt)) {
                         Output::error('A pergunta não pode estar vazia');
                     }
@@ -68,7 +75,7 @@ class Questions
                         Output::error('Informe o ID para deletar.');
                     }
 
-                    Crud::delete(Question::class, 'id', $id);
+                    Crud::delete(Question::class, $id);
 
                     Output::success([], Output::DELETE_SUCCESS);
             }

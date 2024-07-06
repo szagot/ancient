@@ -2,6 +2,7 @@
 
 use Szagot\Helper\Conn\Connection;
 use Szagot\Helper\Conn\Query;
+use Szagot\Helper\Server\Uri;
 
 define('BASEDIR', __DIR__ . DIRECTORY_SEPARATOR);
 define('ROOT', 'ancient/backend/');
@@ -25,3 +26,5 @@ Query::setConn(
         ''
     )
 );
+
+Uri::newInstance(ROOT);
