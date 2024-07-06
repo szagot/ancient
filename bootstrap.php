@@ -4,10 +4,7 @@ use Szagot\Helper\Conn\Connection;
 use Szagot\Helper\Conn\Query;
 use Szagot\Helper\Server\Uri;
 
-define('BASEDIR', __DIR__ . DIRECTORY_SEPARATOR);
-define('ROOT', 'ancient/backend/');
-
-require_once BASEDIR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
+require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
 $debug = false;
 
@@ -27,4 +24,4 @@ Query::setConn(
     )
 );
 
-Uri::newInstance(ROOT);
+Uri::newInstance('ancient/backend');
