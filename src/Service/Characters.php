@@ -20,7 +20,12 @@ class Characters
                 case 'GET':
                     if (empty($id)) {
                         // GET All
-                        Output::success(Crud::getAll(Character::class, 0, 0, 'name'));
+                        $characters = Crud::getAll(Character::class, 0, 0, 'name');
+                        /** @var Character $character */
+                        foreach ($characters as $index => $character) {
+                            $characters[$index] = $character->toArray();
+                        }
+                        Output::success($characters);
                     }
 
                     /** @var Character $character */
@@ -29,13 +34,9 @@ class Characters
                         Output::error('Personagem não encontrado.', 404);
                     }
 
-                    // GET /{id}/questions
-                    if ($uri->getUri(2) == 'questions') {
-                        Output::success($character->getQuestions());
-                    }
-
                     // GET {id}
-                    Output::success($character);
+                    $character->getQuestions();
+                    Output::success($character->toArray(true));
 
                 case 'POST':
                     $name = $uri->getParameter('name');
@@ -50,8 +51,7 @@ class Characters
                     }
 
                     $character = new Character();
-                    $character->name = $name;
-                    $id = Crud::insert(Character::class, $character);
+                    $id = Crud::insert(Character::class, $character->setName($name));
 
                     Output::success(['id' => $id], Output::POST_SUCCESS);
 
@@ -66,13 +66,19 @@ class Characters
                         Output::error('Informe o nome do personagem.');
                     }
 
+                    /** @var Character $character */
                     $character = Crud::get(Character::class, $id);
                     if (!$character) {
                         Output::error('Personagem não encontrado.');
                     }
 
-                    $character->name = $name;
-                    Crud::update(Character::class, $character);
+                    // Verifica se tem outro personagem com esse nome alterado
+                    $validate = Crud::search(Character::class, 'name', $name);
+                    if($validate){
+                        Output::error('Já existe um personagem com esse nome.');
+                    }
+
+                    Crud::update(Character::class, $character->setName($name));
 
                     Output::success([], Output::PUT_SUCCESS);
 

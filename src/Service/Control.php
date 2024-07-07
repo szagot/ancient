@@ -4,14 +4,12 @@ namespace Ancient\Service;
 
 use Ancient\Config\Output;
 use Ancient\Models\Config;
-use JetBrains\PhpStorm\NoReturn;
 use Szagot\Helper\Conn\ConnException;
 use Szagot\Helper\Conn\Crud;
 use Szagot\Helper\Server\Uri;
 
 class Control
 {
-    #[NoReturn]
     static public function run(): void
     {
         self::cors();

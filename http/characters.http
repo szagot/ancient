@@ -5,11 +5,7 @@ GET http://localhost:8888/characters
 AncientAuth: {{auth}}
 
 ### Pega um personagem específico
-GET http://localhost:8888/characters/1
-AncientAuth: {{auth}}
-
-### Pega as perguntas relacioadas àquele personagem
-GET http://localhost:8888/characters/1/questions
+GET http://localhost:8888/characters/102
 AncientAuth: {{auth}}
 
 ### Cria um novo personagem
@@ -18,18 +14,18 @@ Content-Type: application/json
 AncientAuth: {{auth}}
 
 {
-  "name": "Adão"
+  "name": "Adaão"
 }
 
 ### Altera um personagem
-PUT http://localhost:8888/characters/2
+PUT http://localhost:8888/characters/102
 Content-Type: application/json
 AncientAuth: {{auth}}
 
 {
-  "name": "Abrão"
+  "name": "Adaaão"
 }
 
 ### Apaga um personagem
-DELETE http://localhost:8888/characters/2
+DELETE http://localhost:8888/characters/102
 AncientAuth: {{auth}}
