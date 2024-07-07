@@ -15,26 +15,11 @@ Content-Type: application/json
 AncientAuth: {{auth}}
 
 {
-  "name": "filipe"
+  "name": "sara"
 }
 
 ### Sala
 GET http://localhost:8888/room/D6B180
-Content-Type: application/json
-AncientAuth: {{auth}}
-
-### Jogadores da Sala
-GET http://localhost:8888/room/D6B180/gamers
-Content-Type: application/json
-AncientAuth: {{auth}}
-
-### Jogador Fora da Rodada
-GET http://localhost:8888/room/D6B180/outOfLoop
-Content-Type: application/json
-AncientAuth: {{auth}}
-
-### Personagem Secreto
-GET http://localhost:8888/room/D6B180/secret
 Content-Type: application/json
 AncientAuth: {{auth}}
 

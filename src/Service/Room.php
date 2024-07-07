@@ -22,22 +22,16 @@ class Room
 
             /** @var ModelRoom $room */
             $room = Crud::get(ModelRoom::class, $code);
-            if ($room?->code != $code && $uri->getMethod() != 'POST') {
+            if ($room?->getCode() != $code && $uri->getMethod() != 'POST') {
                 Output::error('Código da sala inválido', Output::ERROR_NOT_FOUND);
             }
 
             switch ($uri->getMethod()) {
                 case 'GET':
-                    switch ($uri->getUri(2)) {
-                        case 'gamers':
-                            Output::success($room->getGamers());
-                        case 'outOfLoop':
-                            Output::success($room->getOutOfTheLoopGamer());
-                        case 'secret':
-                            Output::success($room->getSecretCharacter());
-                        default:
-                            Output::success($room);
-                    }
+                    $room->getGamers();
+                    $room->getOutOfTheLoopGamer();
+                    $room->getSecretCharacter();
+                    Output::success($room->toArray(true));
 
                 case 'POST':
                     $name = strtolower($uri->getParameter('name'));
@@ -56,15 +50,15 @@ class Room
 
                         /** @var Gamer $gamer */
                         foreach ($room->getGamers() as $gamer) {
-                            if ($gamer->name == $name) {
+                            if ($gamer->getName() == $name) {
                                 Output::error('Esse nome já foi escolhido');
                             }
                         }
 
-                        $id = Crud::insert(Gamer::class, Gamer::newGamer($name, $room->code));
+                        $id = Crud::insert(Gamer::class, Gamer::newGamer($name, $room->getCode()));
                         Output::success(
                             [
-                                'room_code' => $room->code,
+                                'room_code' => $room->getCode(),
                                 'gamer_id'  => $id,
                             ],
                             Output::POST_SUCCESS
@@ -73,13 +67,13 @@ class Room
 
                     // Cria uma sala nova
                     $room = ModelRoom::newRoom();
-                    $gamer = Gamer::newGamer($name, $room->code);
+                    $gamer = Gamer::newGamer($name, $room->getCode());
                     Crud::insert(ModelRoom::class, $room);
                     $id = Crud::insert(Gamer::class, $gamer);
 
                     Output::success(
                         [
-                            'room_code' => $room->code,
+                            'room_code' => $room->getCode(),
                             'gamer_id'  => $id,
                         ],
                         Output::POST_SUCCESS
