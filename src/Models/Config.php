@@ -10,6 +10,28 @@ use Szagot\Helper\Conn\Model\aModel;
 class Config extends aModel
 {
     #[PrimaryKey(autoIncrement: false)]
-    public string  $field;
-    public ?string $value;
+    private string  $field;
+    private ?string $value;
+
+    public function getField(): string
+    {
+        return $this->field;
+    }
+
+    public function setField(string $field): Config
+    {
+        $this->field = $field;
+        return $this;
+    }
+
+    public function getValue(): ?string
+    {
+        return $this->value;
+    }
+
+    public function setValue(?string $value): Config
+    {
+        $this->value = $value;
+        return $this;
+    }
 }

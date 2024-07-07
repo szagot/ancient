@@ -80,6 +80,6 @@ class Control
             return false;
         }
 
-        return $apiPass?->value == $auth;
+        return $apiPass?->getValue() == $auth;
     }
 }
