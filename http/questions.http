@@ -4,12 +4,8 @@
 GET http://localhost:8888/questions
 AncientAuth: {{auth}}
 
-### Pega uma pergunta específica
-GET http://localhost:8888/questions/1
-AncientAuth: {{auth}}
-
-### Pega os personagens relacionados àquela pergunta
-GET http://localhost:8888/questions/1/characters
+### Pega uma pergunta específica e seus personagens relacionados
+GET http://localhost:8888/questions/37
 AncientAuth: {{auth}}
 
 ### Cria uma pergunta
@@ -18,18 +14,18 @@ Content-Type: application/json
 AncientAuth: {{auth}}
 
 {
-  "question": "Foi um profeta?"
+  "question": "Fez milagres?"
 }
 
 ### Atualiza uma pergunta
-PUT http://localhost:8888/questions/2
+PUT http://localhost:8888/questions/37
 Content-Type: application/json
 AncientAuth: {{auth}}
 
 {
-  "question": "Foi um profeta ou profetisa?"
+  "question": "Viu algum milagre?"
 }
 
 ### Apaga uma pergunta
-DELETE http://localhost:8888/questions/3
+DELETE http://localhost:8888/questions/37
 AncientAuth: {{auth}}

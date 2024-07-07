@@ -20,7 +20,14 @@ class Questions
                 case 'GET':
                     if (empty($id)) {
                         // GET All
-                        Output::success(Crud::getAll(Question::class));
+                        $questions = Crud::getAll(Question::class);
+                        if (!empty($questions)) {
+                            /** @var Question $question */
+                            foreach ($questions as $index => $question) {
+                                $questions[$index] = $question->toArray();
+                            }
+                        }
+                        Output::success($questions);
                     }
 
                     /** @var Question $question */
@@ -29,13 +36,9 @@ class Questions
                         Output::error('Pergunta não encontrada.', 404);
                     }
 
-                    // GET /{id}/characters
-                    if ($uri->getUri(2) == 'characters') {
-                        Output::success($question->getCharacters());
-                    }
-
                     // GET {id}
-                    Output::success($question);
+                    $question->getCharacters();
+                    Output::success($question->toArray(true));
 
                 case 'POST':
                     $questionTxt = $uri->getParameter('question');
@@ -44,8 +47,7 @@ class Questions
                     }
 
                     $question = new Question();
-                    $question->question = $questionTxt;
-                    $id = Crud::insert(Question::class, $question);
+                    $id = Crud::insert(Question::class, $question->setQuestion($questionTxt));
 
                     Output::success(['id' => $id], Output::POST_SUCCESS);
 
@@ -65,8 +67,7 @@ class Questions
                         Output::error('Pergunta não encontrado.');
                     }
 
-                    $question->question = $questionTxt;
-                    Crud::update(Question::class, $question);
+                    Crud::update(Question::class, $question->setQuestion($questionTxt));
 
                     Output::success([], Output::PUT_SUCCESS);
 
