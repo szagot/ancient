@@ -74,9 +74,8 @@ class Characters
                             Output::error('Informe o nome do personagem.');
                         }
 
-                        // Verifica se tem outro personagem com esse nome alterado
                         $validate = Crud::search(Character::class, 'name', $name);
-                        if ($validate) {
+                        if (!empty($validate) && $validate[0]?->getId() != $id) {
                             Output::error('Já existe um personagem com esse nome.');
                         }
 
