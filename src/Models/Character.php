@@ -51,6 +51,8 @@ class Character extends aModel
             ) ?? [];
         }
 
+        error_log(print_r($this->questions, true));
+
         return $this->questions;
     }
 }

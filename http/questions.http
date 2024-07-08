@@ -5,7 +5,7 @@ GET http://localhost:8888/questions
 AncientAuth: {{auth}}
 
 ### Pega uma pergunta específica e seus personagens relacionados
-GET http://localhost:8888/questions/37
+GET http://localhost:8888/questions/1
 AncientAuth: {{auth}}
 
 ### Cria uma pergunta
@@ -18,13 +18,15 @@ AncientAuth: {{auth}}
 }
 
 ### Atualiza uma pergunta
-PUT http://localhost:8888/questions/37
+PUT http://localhost:8888/questions/1
 Content-Type: application/json
 AncientAuth: {{auth}}
 
 {
-  "question": "Viu algum milagre?"
+  "question": "Viu algum milagre?",
+  "characterIds": [1, 2, 3]
 }
+
 
 ### Apaga uma pergunta
 DELETE http://localhost:8888/questions/37
