@@ -64,6 +64,10 @@ class Question extends aModel
      */
     public function setCharacters(?array $characterIds = []): bool
     {
+        if (!$this->id) {
+            return false;
+        }
+
         // Primeiro limpa os registros já existentes
         $this->characters = [];
         if (!Query::exec(
@@ -98,6 +102,7 @@ class Question extends aModel
                 }
             }
         }
+
         return true;
     }
 }
