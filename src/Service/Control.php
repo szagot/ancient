@@ -68,7 +68,7 @@ class Control
     // Função para verificar as credenciais de autenticação básica
     private static function checkBasicAuth(): bool
     {
-        $auth = Uri::newInstance()->getHeader('AncientAuth');
+        $auth = Uri::newInstance()->getHeader('Ancient-Auth');
         if (empty($auth)) {
             return false;
         }

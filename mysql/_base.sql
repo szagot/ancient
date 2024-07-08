@@ -1,3 +1,13 @@
+/*
+Criação de usuário:
+
+create user 'ancient'@'localhost';
+set password for 'ancient'@'localhost' = password('4nc13nt');
+grant all on ancient.* to 'ancient'@'localhost';
+flush privileges;
+*/
+
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET NAMES utf8 */;
 /*!50503 SET NAMES utf8mb4 */;
