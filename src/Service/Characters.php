@@ -3,6 +3,7 @@
 namespace Ancient\Service;
 
 use Ancient\Config\Output;
+use Ancient\Control\CharacterQuestion;
 use Ancient\Models\Character;
 use Szagot\Helper\Conn\ConnException;
 use Szagot\Helper\Conn\Crud;
@@ -61,24 +62,38 @@ class Characters
                         Output::error('Informe o ID para atualização.');
                     }
 
-                    $name = $uri->getParameter('name');
-                    if (empty($name)) {
-                        Output::error('Informe o nome do personagem.');
-                    }
-
                     /** @var Character $character */
                     $character = Crud::get(Character::class, $id);
                     if (!$character) {
                         Output::error('Personagem não encontrado.');
                     }
 
-                    // Verifica se tem outro personagem com esse nome alterado
-                    $validate = Crud::search(Character::class, 'name', $name);
-                    if($validate){
-                        Output::error('Já existe um personagem com esse nome.');
+                    if ($uri->parameterExists('name')) {
+                        $name = $uri->getParameter('name');
+                        if (empty($name)) {
+                            Output::error('Informe o nome do personagem.');
+                        }
+
+                        // Verifica se tem outro personagem com esse nome alterado
+                        $validate = Crud::search(Character::class, 'name', $name);
+                        if ($validate) {
+                            Output::error('Já existe um personagem com esse nome.');
+                        }
+
+                        Crud::update(Character::class, $character->setName($name));
                     }
 
-                    Crud::update(Character::class, $character->setName($name));
+                    // Recebeu dados de atualização de perguntas?
+                    if ($uri->parameterExists('questionIds')) {
+                        if (
+                            !CharacterQuestion::saveCharacterQuestions(
+                                $character,
+                                $uri->getParameter('questionIds')->getValue()
+                            )
+                        ) {
+                            Output::error('Informe apenas Perguntas válidas para esse personagem');
+                        }
+                    }
 
                     Output::success([], Output::PUT_SUCCESS);
 

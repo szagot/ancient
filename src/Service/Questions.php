@@ -3,7 +3,7 @@
 namespace Ancient\Service;
 
 use Ancient\Config\Output;
-use Ancient\Models\Character;
+use Ancient\Control\CharacterQuestion;
 use Ancient\Models\Question;
 use Szagot\Helper\Conn\ConnException;
 use Szagot\Helper\Conn\Crud;
@@ -64,25 +64,25 @@ class Questions
                         Output::error('Pergunta não encontrado.');
                     }
 
-                    $hasUpdate = false;
                     if ($uri->parameterExists('question')) {
                         $questionTxt = $uri->getParameter('question');
                         if (empty($questionTxt)) {
                             Output::error('A pergunta não pode estar vazia');
                         }
                         $question->setQuestion($questionTxt);
-                        $hasUpdate = true;
+                        Crud::update(Question::class, $question);
                     }
 
                     // Recebeu dados de atualização de personagens?
                     if ($uri->parameterExists('characterIds')) {
-                        if (!$question->setCharacters($uri->getParameter('characterIds')->getValue())) {
+                        if (
+                            !CharacterQuestion::saveQuestionCharacters(
+                                $question,
+                                $uri->getParameter('characterIds')->getValue()
+                            )
+                        ) {
                             Output::error('Informe apenas Personagens válidos para essa pergunta');
                         }
-                    }
-
-                    if ($hasUpdate) {
-                        Crud::update(Question::class, $question);
                     }
 
                     Output::success([], Output::PUT_SUCCESS);

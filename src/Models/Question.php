@@ -5,8 +5,6 @@ namespace Ancient\Models;
 use Szagot\Helper\Attributes\IgnoreField;
 use Szagot\Helper\Attributes\PrimaryKey;
 use Szagot\Helper\Attributes\Table;
-use Szagot\Helper\Conn\ConnException;
-use Szagot\Helper\Conn\Crud;
 use Szagot\Helper\Conn\Model\aModel;
 use Szagot\Helper\Conn\Query;
 
@@ -42,9 +40,9 @@ class Question extends aModel
         return $this;
     }
 
-    public function getCharacters(): array
+    public function getCharacters(bool $forceUpdate = false): array
     {
-        if (empty($this->characters)) {
+        if (empty($this->characters) || $forceUpdate) {
             $this->characters = Query::exec(
                 'SELECT c.* FROM characters c INNER JOIN character_question cq on c.id = cq.character_id WHERE cq.question_id = :id',
                 [
@@ -55,54 +53,5 @@ class Question extends aModel
         }
 
         return $this->characters;
-    }
-
-    /**
-     * Seta os caracteres
-     *
-     * @throws ConnException
-     */
-    public function setCharacters(?array $characterIds = []): bool
-    {
-        if (!$this->id) {
-            return false;
-        }
-
-        // Primeiro limpa os registros já existentes
-        $this->characters = [];
-        if (!Query::exec(
-            'DELETE FROM character_question WHERE question_id = :id',
-            [
-                'id' => $this->id,
-            ]
-        )) {
-            throw new ConnException('Não foi possível atualizar os registros de no momento. Problemas ao limpar registros.');
-        }
-
-        if (!empty($characterIds)) {
-            foreach ($characterIds as $id) {
-                $tmp = Crud::get(Character::class, $id);
-                if (!$tmp) {
-                    return false;
-                }
-                $this->characters[] = $tmp;
-            }
-
-            /** @var Character $character */
-            foreach ($this->characters as $character) {
-                // Depois os recria
-                if (!Query::exec(
-                    'INSERT INTO character_question (character_id, question_id) VALUES (:character_id, :question_id)',
-                    [
-                        'question_id'  => $this->id,
-                        'character_id' => $character->getId(),
-                    ]
-                )) {
-                    throw new ConnException("Não foi possível atualizar o registro de ID {$character->getId()} no momento. Problemas ao inserir registro.");
-                }
-            }
-        }
-
-        return true;
     }
 }

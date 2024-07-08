@@ -39,9 +39,9 @@ class Character extends aModel
         return $this;
     }
 
-    public function getQuestions(): array
+    public function getQuestions(bool $forceUpdate = false): array
     {
-        if (empty($this->questions)) {
+        if (empty($this->questions) || $forceUpdate) {
             $this->questions = Query::exec(
                 'SELECT q.* FROM questions q INNER JOIN character_question cq on q.id = cq.question_id WHERE cq.character_id = :id',
                 [
@@ -51,8 +51,7 @@ class Character extends aModel
             ) ?? [];
         }
 
-        error_log(print_r($this->questions, true));
-
         return $this->questions;
     }
+
 }
