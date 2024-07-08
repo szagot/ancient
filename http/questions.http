@@ -2,16 +2,16 @@
 
 ### Pega todas as perguntas
 GET http://localhost:8888/questions
-AncientAuth: {{auth}}
+Ancient-Auth: {{auth}}
 
 ### Pega uma pergunta específica e seus personagens relacionados
 GET http://localhost:8888/questions/39
-AncientAuth: {{auth}}
+Ancient-Auth: {{auth}}
 
 ### Cria uma pergunta
 POST http://localhost:8888/questions
 Content-Type: application/json
-AncientAuth: {{auth}}
+Ancient-Auth: {{auth}}
 
 {
   "question": "Teste?"
@@ -20,7 +20,7 @@ AncientAuth: {{auth}}
 ### Atualiza uma pergunta
 PUT http://localhost:8888/questions/39
 Content-Type: application/json
-AncientAuth: {{auth}}
+Ancient-Auth: {{auth}}
 
 {
   "question": "Viu algum milagre?",
@@ -30,4 +30,4 @@ AncientAuth: {{auth}}
 
 ### Apaga uma pergunta
 DELETE http://localhost:8888/questions/39
-AncientAuth: {{auth}}
+Ancient-Auth: {{auth}}

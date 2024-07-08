@@ -3,7 +3,7 @@
 ### Criando a Sala
 POST http://localhost:8888/room
 Content-Type: application/json
-AncientAuth: {{auth}}
+Ancient-Auth: {{auth}}
 
 {
   "name": "szagot"
@@ -12,7 +12,7 @@ AncientAuth: {{auth}}
 ### Adicionando Jogadores
 POST http://localhost:8888/room/D6B180
 Content-Type: application/json
-AncientAuth: {{auth}}
+Ancient-Auth: {{auth}}
 
 {
   "name": "sara"
@@ -21,12 +21,12 @@ AncientAuth: {{auth}}
 ### Sala
 GET http://localhost:8888/room/D6B180
 Content-Type: application/json
-AncientAuth: {{auth}}
+Ancient-Auth: {{auth}}
 
 ### Deixando a Sala
 DELETE http://localhost:8888/room/DB8E19
 Content-Type: application/json
-AncientAuth: {{auth}}
+Ancient-Auth: {{auth}}
 
 {
   "id": 6

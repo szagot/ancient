@@ -4,14 +4,14 @@
 ### Pega os dados do jogador.
 GET http://localhost:8888/game/D6B180/2
 Content-Type: application/json
-AncientAuth: {{auth}}
+Ancient-Auth: {{auth}}
 
 ### Permite o início do jogo
 GET http://localhost:8888/game/D6B180/2/allow
 Content-Type: application/json
-AncientAuth: {{auth}}
+Ancient-Auth: {{auth}}
 
 ### Avança a fase
 POST http://localhost:8888/game/D6B180/2
 Content-Type: application/json
-AncientAuth: {{auth}}
+Ancient-Auth: {{auth}}
