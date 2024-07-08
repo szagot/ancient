@@ -19,8 +19,8 @@ Query::setConn(
     new Connection(
         'ancient',
         'localhost',
-        'root',
-        ''
+        'ancient',
+        '4nc13nt'
     )
 );
 
