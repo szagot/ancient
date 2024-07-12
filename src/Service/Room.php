@@ -7,6 +7,7 @@ use Ancient\Models\Gamer;
 use Ancient\Models\Room as ModelRoom;
 use Szagot\Helper\Conn\ConnException;
 use Szagot\Helper\Conn\Crud;
+use Szagot\Helper\Conn\Query;
 use Szagot\Helper\Server\Uri;
 
 class Room
@@ -96,6 +97,9 @@ class Room
                     Output::success(null, Output::DELETE_SUCCESS);
             }
         } catch (ConnException $e) {
+            error_log('-------------');
+            error_log(print_r(Query::getLastLog(), true));
+            error_log('-------------');
             Output::error($e->getMessage());
         }
     }

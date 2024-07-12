@@ -5,6 +5,7 @@ namespace Ancient\Control;
 use Ancient\Models\View;
 use Szagot\Helper\Conn\ConnException;
 use Szagot\Helper\Conn\Crud;
+use Szagot\Helper\Conn\Query;
 
 class ViewControl
 {
@@ -38,7 +39,18 @@ class ViewControl
      */
     public static function increaseView(View $view): ?View
     {
-        Crud::update(View::class, $view->increaseQt());
+        $view->increaseQt();
+
+        if (!Query::exec(
+            'UPDATE views SET qt = :qt WHERE room_code = :room AND gamer_id = :id',
+            [
+                'room' => $view->getRoomCode(),
+                'id'   => $view->getGamerId(),
+                'qt'   => $view->getQt(),
+            ]
+        )) {
+            throw new ConnException('Não foi possível aumentar a quantidade de views.');
+        }
 
         return $view;
     }
@@ -71,5 +83,13 @@ class ViewControl
         Crud::insert(View::class, $view);
 
         return $view;
+    }
+
+    /**
+     * @throws ConnException
+     */
+    public static function clearViewersRoom(string $roomCode): void
+    {
+        Crud::delete(View::class, $roomCode);
     }
 }

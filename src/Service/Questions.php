@@ -7,6 +7,7 @@ use Ancient\Control\CharacterQuestion;
 use Ancient\Models\Question;
 use Szagot\Helper\Conn\ConnException;
 use Szagot\Helper\Conn\Crud;
+use Szagot\Helper\Conn\Query;
 use Szagot\Helper\Server\Uri;
 
 class Questions
@@ -98,6 +99,9 @@ class Questions
             }
 
         } catch (ConnException $e) {
+            error_log('-------------');
+            error_log(print_r(Query::getLastLog(), true));
+            error_log('-------------');
             Output::error($e->getMessage());
         }
     }

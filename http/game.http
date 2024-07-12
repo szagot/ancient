@@ -12,6 +12,6 @@ Content-Type: application/json
 Ancient-Auth: {{auth}}
 
 ### Avança a fase
-POST http://localhost:8888/game/D6B180/2
+POST http://localhost:8888/game/D6B180/3
 Content-Type: application/json
 Ancient-Auth: {{auth}}

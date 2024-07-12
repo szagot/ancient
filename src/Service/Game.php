@@ -3,11 +3,13 @@
 namespace Ancient\Service;
 
 use Ancient\Config\Output;
+use Ancient\Control\ViewControl;
 use Ancient\Models\Gamer;
 use Ancient\Models\Question;
 use Ancient\Models\Room as ModelRoom;
 use Szagot\Helper\Conn\ConnException;
 use Szagot\Helper\Conn\Crud;
+use Szagot\Helper\Conn\Query;
 use Szagot\Helper\Server\Uri;
 
 class Game
@@ -58,10 +60,18 @@ class Game
                     }
 
                 case 'POST':
+                    // TODO: teste
+                    $view = ViewControl::insert($code, $gamerId);
+                    $view->getRoom();
+                    $view->getGamer();
+                    Output::success($view->toArray(true));
                     Output::success(self::nextFase($room), Output::POST_SUCCESS);
             }
 
         } catch (ConnException $e) {
+            error_log('-------------');
+            error_log(print_r(Query::getLastLog(), true));
+            error_log('-------------');
             Output::error($e->getMessage());
         }
     }

@@ -9,18 +9,18 @@ use Szagot\Helper\Conn\ConnException;
 use Szagot\Helper\Conn\Crud;
 use Szagot\Helper\Conn\Model\aModel;
 
-#[Table(name: 'view')]
+#[Table(name: 'views')]
 class View extends aModel
 {
     #[PrimaryKey(autoIncrement: false)]
-    private ?string $room_code = '';
-    private ?int    $gamer_id  = 0;
-    private ?int    $qt        = 0;
+    protected ?string $room_code = '';
+    protected ?int    $gamer_id  = 0;
+    protected ?int    $qt        = 0;
 
     #[IgnoreField]
-    private ?Room  $room  = null;
+    protected ?Room  $room  = null;
     #[IgnoreField]
-    private ?Gamer $gamer = null;
+    protected ?Gamer $gamer = null;
 
     public function getRoomCode(): ?string
     {
